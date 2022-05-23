@@ -1,3 +1,6 @@
+using Serilog;
+using velosaurus_backend.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,8 +11,6 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-// compare to HotelListing example!
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "MyAllowAllPolicy",
@@ -25,7 +26,13 @@ builder.Services.AddCors(options =>
                       });
 });
 
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+
+// Register configuration instance to DI container, to which the appsettings.json section binds
+builder.Services.Configure<TourDatabaseSettings>(builder.Configuration.GetSection("TourDatabase"));
+
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
