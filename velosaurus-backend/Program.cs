@@ -1,5 +1,7 @@
-using Serilog;
+﻿using Serilog;
 using velosaurus_backend.Models;
+using velosaurus_backend.Controllers;
+using velosaurus_backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +28,13 @@ builder.Services.AddCors(options =>
                       });
 });
 
-builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+// "WriteTo.Console" to also see in dev console during debugging
+builder.Host.UseSerilog((context, configuration) => configuration.WriteTo.Console().ReadFrom.Configuration(context.Configuration));
 
 // Register configuration instance to DI container, to which the appsettings.json section binds
 builder.Services.Configure<TourDatabaseSettings>(builder.Configuration.GetSection("TourDatabase"));
+
+builder.Services.AddSingleton<TourDatabaseService>();
 
 var app = builder.Build();
 

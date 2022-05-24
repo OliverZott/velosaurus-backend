@@ -5,11 +5,33 @@
   - **ps script** for checking and starting mongodb and seq service
 - MongoDB driver and configuration
 
+
+
 # Next steps
-- Dummy controller
-	- MtbTour
-- Seq online (for hosted env)
-- Deployment
+
+### Frontend
+- Bootstrap for Tour list example page
+- Resolve enum in forntend
+	- How use ENUM in controller ?!
+- Post request formular in frontend
+
+### backend
+- Exception handling 
+	- ID
+	- no entry found
+- DEPLOY
+	- Seq online - for hosted env
+	- Mongo online - Atlass instead local instance
+	- Deployment with Atlas
+
+- DTOs in frontende / backend ?! (how map api reponse on jsx object)
+
+
+
+# Questions
+- How use ENUM in controller ?!
+- DTOs in frontende / backend ?! (how map api reponse on jsx object)
+
 
 
 # Remarks
@@ -37,6 +59,9 @@
 	- `Program.cs` 
 
 
+## Json Serializer
+- https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/formatting?view=aspnetcore-6.0#configure-systemtextjson-based-formatters
+
 ## Error / Exception handling
 - https://jasonwatmore.com/post/2022/01/17/net-6-global-error-handler-tutorial-with-example
 - https://weblogs.asp.net/fredriknormen/asp-net-web-api-exception-handling
@@ -44,3 +69,8 @@
 - https://docs.microsoft.com/en-us/aspnet/web-api/overview/error-handling/exception-handling
 - https://docs.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-6.0
 - https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-6.0
+
+
+# Start App
+- Serilog: http://localhost:5341/#/events
+- App: https://localhost:7269/swagger/index.html
