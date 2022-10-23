@@ -1,6 +1,5 @@
 ﻿using Serilog;
 using velosaurus_backend.Models;
-using velosaurus_backend.Controllers;
 using velosaurus_backend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,9 +41,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSwagger();
 
 app.UseHttpsRedirection();
 
