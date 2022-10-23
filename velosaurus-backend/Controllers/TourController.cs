@@ -36,6 +36,4 @@ public class TourController
     {
         return _databaseService.CreateTour(tour);
     }
-
-
 }

@@ -9,9 +9,9 @@ public class TourDatabaseService
     private readonly IMongoCollection<Tour> _tourCollection;
     private readonly ILogger<TourDatabaseService> _logger;
 
-    public TourDatabaseService(IOptions<TourDatabaseSettings> options, ILogger<TourDatabaseService> logger)
+    public TourDatabaseService(IOptions<TourDatabaseSettings> options, ILogger<TourDatabaseService> logger, IConfiguration configuration)
     {
-        var mongoClient = new MongoClient(options.Value.DbConnectionString);
+        var mongoClient = new MongoClient(configuration["MongoDb:url"]);
         var mongoDatabase = mongoClient.GetDatabase(options.Value.DatabaseName);
         _tourCollection = mongoDatabase.GetCollection<Tour>(options.Value.TourCollectionName);
         _logger = logger;
