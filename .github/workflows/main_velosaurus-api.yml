@@ -18,7 +18,7 @@ jobs:
 
       - uses: microsoft/variable-substitution@v1 
         with:
-            files: '${{env.DOTNET_ROOT}}/velosaurus-backend/appsettings.json'
+            files: '${{env.DOTNET_ROOT}}/velosaurus-backend/velosaurus-backend/appsettings.json'
         env:
             DbConnectionString: ${{ secrets.ZIM_NAME }}
             App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
