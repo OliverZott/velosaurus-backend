@@ -20,7 +20,7 @@ jobs:
         with:
             files: '**/appsettings.json'
         env:
-            TourDatabase.DbConnectionString: ${{ secrets.ZIM_NAME }}
+            TourDatabase.DbConnectionString: ${{ secrets.DBCONNECTIONSTRING }}
             App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
 
       - name: Set up .NET Core
