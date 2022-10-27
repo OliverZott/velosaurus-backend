@@ -13,5 +13,5 @@ public class TestController : ControllerBase
     }
 
     [HttpGet]
-    public string Get() => $"Hello There =) {_configuration["Zim:Name"]}\nDB: {_configuration["TourDatabase:DbConnectionString"]}";
+    public string Get() => $"Hello There =)";
 }
