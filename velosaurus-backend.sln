@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{410E43E6-C152-4671-BB6E-41521E7DC8B5}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.github\workflows\main_velosaurus-api.yml = .github\workflows\main_velosaurus-api.yml
 	EndProjectSection
 EndProject
 Global

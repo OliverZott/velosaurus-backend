@@ -11,6 +11,20 @@
 - Serilog Seq sing: <http://localhost:5341/#/events>
 - App: <https://localhost:7269/swagger/index.html>
 
+Deployment:
+- https://velosaurus-api.azurewebsites.net/swagger/index.html
+- https://velosaurus-api.azurewebsites.net/
+- 
+- https://github.com/OliverZott/velosaurus-backend/actions
+- https://portal.azure.com/
+- https://cloud.mongodb.com/
+
+
+# Resources
+
+- https://www.mongodb.com/developer/languages/csharp/build-first-dotnet-core-application-mongodb-atlas/
+- https://www.mongodb.com/languages/how-to-use-mongodb-with-dotnet
+
 # Next steps
 
 ## Frontend
