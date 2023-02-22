@@ -5,10 +5,10 @@
 - Database: **MongoDB**
 - Repo & Pipelines: **Github**
 - Hosting: **Heroku** amd **Azure**
-  - <https://portal.azure.com/>
-  - <https://dashboard.heroku.com/>
+    - <https://portal.azure.com/>
+    - <https://dashboard.heroku.com/>
 - DevOps: **Azure DevOps**
-  - <https://dev.azure.com/>
+    - <https://dev.azure.com/>
 
 ![Project Structure](velosaurus_architecture.jpg)
 
@@ -16,7 +16,7 @@
 
 - `dotnet run`
 - Serilog Seq sing: <http://localhost:5341/#/events>
-- App: <https://localhost:7269/swagger/index.html>
+- App: <https://localhost:7269/swagger/index.html> or https://localhost:7019/swagger/index.html
 
 Deployment:
 
@@ -32,7 +32,7 @@ Deployment:
 - Create Project and Solution `ASP.NET Core Web API`
 - **CORS** configuration [Link](https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0)
 - **Serilog** and **Seq**
-  - **ps script** for checking and starting mongodb and seq service
+    - **ps script** for checking and starting mongodb and seq service
 - MongoDB driver and configuration (Secrets for Credentials)
 
 ## Resources
@@ -46,20 +46,33 @@ Deployment:
 
 - Bootstrap for Tour list example page
 - Resolve enum in forntend
-  - How use ENUM in controller ?!
+    - How use ENUM in controller ?!
 - Post request formular in frontend
+- DTOs in frontende / backend ?! (how map api reponse on jsx object)
 
 ### Backend
 
 - Exception handling
-  - ID
-  - no entry found
-- DEPLOY
-  - Seq online - for hosted env
-  - Mongo online - Atlass instead local instance
-  - Deployment with Atlas
+    - global
+    - ID
+    - no entry found
 
-- DTOs in frontende / backend ?! (how map api reponse on jsx object)
+- Logging
+    - where? only in global exc handling?
+
+- DTO
+    - for differenct API endpoints
+
+Patterns:
+
+- Unit Of Work ?
+- Repository Pattern ?
+- CQRS ? --> Probably complete overkill
+
+- DEPLOY
+    - Seq online - for hosted env
+    - Mongo online - Atlass instead local instance
+    - Deployment with Atlas
 
 ## Questions
 
@@ -72,7 +85,7 @@ Deployment:
 
 - <https://www.youtube.com/watch?v=MYKTwvowMUI>
 - <https://www.youtube.com/watch?v=hJ0QHRV3RPQ>
-  - <https://github.com/rstropek/htl-leo-pro-5/tree/master/lectures/0500-api-error-handling/WebApiErrorHandling.Server>
+    - <https://github.com/rstropek/htl-leo-pro-5/tree/master/lectures/0500-api-error-handling/WebApiErrorHandling.Server>
 - <https://www.youtube.com/watch?v=_iryZxv8Rxw>
 
 ### Seq
@@ -88,9 +101,9 @@ Deployment:
 - <https://www.youtube.com/watch?v=exXavNOqaVo>
 
 - Add configuration and configuration model
-  - `appsettings.json`
-  - settings class in `Models` directory, to store appsettings properties
-  - `Program.cs`
+    - `appsettings.json`
+    - settings class in `Models` directory, to store appsettings properties
+    - `Program.cs`
 
 #### Deployment & Access
 

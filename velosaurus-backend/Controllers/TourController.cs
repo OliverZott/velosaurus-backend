@@ -8,10 +8,10 @@ namespace velosaurus_backend.Controllers;
 [Route("api/[controller]")]
 public class TourController
 {
-    private readonly ILogger<Tour> _logger;
     private readonly TourDatabaseService _databaseService;
+    private readonly ILogger<TourController> _logger;
 
-    public TourController(ILogger<Tour> logger, TourDatabaseService databaseService)
+    public TourController(ILogger<TourController> logger, TourDatabaseService databaseService)
     {
         _logger = logger;
         _databaseService = databaseService;
@@ -20,9 +20,18 @@ public class TourController
 
     // async await ??
     [HttpGet]
-    public Task<List<Tour>> Get()
+    public async Task<List<Tour>?> Get()
     {
-        return _databaseService.GetAll();
+        try
+        {
+            return await _databaseService.GetAll();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Error: {Msg}", e.Message);
+        }
+
+        return null;
     }
 
     [HttpGet("{id}")]
