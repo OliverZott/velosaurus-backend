@@ -1,44 +1,35 @@
-﻿using Serilog;
-using Velosaurus.Api.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Serilog;
 using Velosaurus.Api.Services;
+using Velosaurus.DatabaseManager;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
+
+var connectionString = builder.Configuration.GetConnectionString("TourDbConnectionString");
+builder.Services.AddDbContext<TourDbContext>(options =>
+{
+    options.UseNpgsql(connectionString);
+});
 
 builder.Services.AddControllers();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEndpointsApiExplorer(); // https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "MyAllowAllPolicy",
-                      p =>
-                      {
-                          p
-                              //.WithOrigins("http://192.168.0.18:3000",
-                              //                "http://localhost:3000",
-                              //                "localhost:3000")
-                              .AllowAnyHeader()
-                              .AllowAnyOrigin()
-                              .AllowAnyMethod();
-                      });
+    options.AddPolicy("MyAllowAllPolicy", p => p.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 });
 
-// "WriteTo.Console" to also see in dev console during debugging
 builder.Host.UseSerilog((context, configuration) => configuration.WriteTo.Console().ReadFrom.Configuration(context.Configuration));
 
-// Register configuration instance to DI container, to which the appsettings.json section binds
-builder.Services.Configure<TourDatabaseSettings>(builder.Configuration.GetSection("TourDatabase"));
+builder.Services.AddScoped<TourDatabaseService>();
 
-builder.Services.AddSingleton<TourDatabaseService>();
 
 var app = builder.Build();
-
-
 // Configure the HTTP request pipeline.
+
 app.UseSwagger();
 app.UseSwaggerUI();
 

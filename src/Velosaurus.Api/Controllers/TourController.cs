@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Velosaurus.Api.Models;
 using Velosaurus.Api.Services;
+using Velosaurus.DatabaseManager.Models;
 
 namespace Velosaurus.Api.Controllers;
 
@@ -18,13 +18,13 @@ public class TourController
         _logger.LogInformation("TourController instantiated...");
     }
 
-    // async await ??
+
     [HttpGet]
     public async Task<List<Tour>?> Get()
     {
         try
         {
-            return await _databaseService.GetAll();
+            return await _databaseService.GetAllAsync();
         }
         catch (Exception e)
         {
@@ -34,14 +34,16 @@ public class TourController
         return null;
     }
 
-    [HttpGet("{id}")]
-    public Task<Tour> GetById(string id)
+
+    [HttpGet("{id:int}")]
+    public Task<Tour> GetById(int? id)
     {
-        return _databaseService.GetById(id);
+        return _databaseService.GetAsync(id);
     }
 
+
     [HttpPost]
-    public Task Post(Tour tour)
+    public Task Create(Tour tour)
     {
         return _databaseService.CreateTour(tour);
     }

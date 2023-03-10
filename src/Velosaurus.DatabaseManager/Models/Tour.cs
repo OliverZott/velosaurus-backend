@@ -1,15 +1,9 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
-namespace Velosaurus.Api.Models;
+﻿namespace Velosaurus.DatabaseManager.Models;
 
 public class Tour
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string? Id { get; set; }
+    public int Id { get; set; }
 
-    [BsonElement("Name")]
     public string TourName { get; set; } = null!;
 
     public DateTime Date { get; set; }

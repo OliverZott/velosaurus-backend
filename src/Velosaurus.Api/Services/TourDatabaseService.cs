@@ -1,47 +1,42 @@
-﻿using Microsoft.Extensions.Options;
-using MongoDB.Driver;
-using Velosaurus.Api.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Velosaurus.DatabaseManager;
+using Velosaurus.DatabaseManager.Models;
 
 namespace Velosaurus.Api.Services;
 
 public class TourDatabaseService
 {
+    private readonly TourDbContext _tourDbContext;
     private readonly ILogger<TourDatabaseService> _logger;
-    private readonly IMongoCollection<Tour> _tourCollection;
 
-    public TourDatabaseService(IOptions<TourDatabaseSettings> options, ILogger<TourDatabaseService> logger,
+    public TourDatabaseService(TourDbContext tourDbContext, ILogger<TourDatabaseService> logger,
         IConfiguration configuration)
     {
-        //local
-        //var mongoClient = new MongoClient(configuration["MongoDb:url"]);
-
-        MongoClient mongoClient = new MongoClient(options.Value.DbConnectionString);
-        IMongoDatabase? mongoDatabase = mongoClient.GetDatabase(options.Value.DatabaseName);
-        _tourCollection = mongoDatabase.GetCollection<Tour>(options.Value.TourCollectionName);
+        _tourDbContext = tourDbContext;
         _logger = logger;
         _logger.LogInformation("TourDatabaseService instantiated...");
     }
 
-    public Task CreateTour(Tour tour)
+    public async Task<Tour> CreateTour(Tour tour)
     {
-        return _tourCollection.InsertOneAsync(tour);
+        await _tourDbContext.AddAsync(tour);
+        return tour;
     }
 
-    public async Task<List<Tour>?> GetAll()
+    public async Task<List<Tour>> GetAllAsync()
     {
-        IAsyncCursor<Tour>? results = await _tourCollection.FindAsync(_ => true);
-        return results.ToList();
+        return await _tourDbContext.Set<Tour>().ToListAsync();
     }
 
-    // Alternative variant
-    public async Task<List<Tour>> GetAsync()
+    public async Task<Tour> GetAsync(int? id)
     {
-        return await _tourCollection.Find(_ => true).ToListAsync();
-    }
+        var result = await _tourDbContext.Set<Tour>().FindAsync(id);
+        if (result is null)
+        {
+            throw new KeyNotFoundException($"No Tour with id: {id} found!");
+        }
 
-    public async Task<Tour> GetById(string id)
-    {
-        return await _tourCollection.Find(x => x.Id == id).FirstOrDefaultAsync();
+        return result;
     }
 }
 
