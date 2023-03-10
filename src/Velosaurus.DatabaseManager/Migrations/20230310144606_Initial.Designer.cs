@@ -12,8 +12,8 @@ using Velosaurus.DatabaseManager;
 namespace Velosaurus.DatabaseManager.Migrations
 {
     [DbContext(typeof(TourDbContext))]
-    [Migration("20230310134237_FixPK")]
-    partial class FixPK
+    [Migration("20230310144606_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -15,7 +15,7 @@
 ## Start App
 
 - `dotnet run`
-- Serilog Seq sing: <http://localhost:5341/#/events>
+- Serilog Seq sink: <http://localhost:5341/#/events>
 - App: <https://localhost:7269/swagger/index.html> or https://localhost:7019/swagger/index.html
 
 Deployment:
@@ -33,7 +33,9 @@ Deployment:
 - **CORS** configuration [Link](https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0)
 - **Serilog** and **Seq**
     - **ps script** for checking and starting mongodb and seq service
-- MongoDB driver and configuration (Secrets for Credentials)
+- Database driver and configuration (Secrets for Credentials)
+    - MongoDB
+    - Postgres
 
 ## Resources
 
@@ -54,14 +56,14 @@ Deployment:
 
 - Exception handling
     - global
-    - ID
-    - no entry found
 
 - Logging
     - where? only in global exc handling?
 
-- DTO
-    - for differenct API endpoints
+- DTOs
+    - for different API endpoints
+
+- ocker Container for local dev/testing
 
 Patterns:
 

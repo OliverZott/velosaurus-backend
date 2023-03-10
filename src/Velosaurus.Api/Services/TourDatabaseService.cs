@@ -6,31 +6,32 @@ namespace Velosaurus.Api.Services;
 
 public class TourDatabaseService
 {
-    private readonly TourDbContext _tourDbContext;
+    private readonly TourDbContext _context;
     private readonly ILogger<TourDatabaseService> _logger;
 
-    public TourDatabaseService(TourDbContext tourDbContext, ILogger<TourDatabaseService> logger,
+    public TourDatabaseService(TourDbContext context, ILogger<TourDatabaseService> logger,
         IConfiguration configuration)
     {
-        _tourDbContext = tourDbContext;
+        _context = context;
         _logger = logger;
         _logger.LogInformation("TourDatabaseService instantiated...");
     }
 
-    public async Task<Tour> CreateTour(Tour tour)
+    public async Task<Tour> AddAsync(Tour tour)
     {
-        await _tourDbContext.AddAsync(tour);
+        await _context.AddAsync(tour);
+        await _context.SaveChangesAsync();
         return tour;
     }
 
     public async Task<List<Tour>> GetAllAsync()
     {
-        return await _tourDbContext.Set<Tour>().ToListAsync();
+        return await _context.Set<Tour>().ToListAsync();
     }
 
     public async Task<Tour> GetAsync(int? id)
     {
-        var result = await _tourDbContext.Set<Tour>().FindAsync(id);
+        Tour? result = await _context.Set<Tour>().FindAsync(id);
         if (result is null)
         {
             throw new KeyNotFoundException($"No Tour with id: {id} found!");
@@ -39,4 +40,3 @@ public class TourDatabaseService
         return result;
     }
 }
-

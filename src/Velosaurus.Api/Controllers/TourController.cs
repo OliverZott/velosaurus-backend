@@ -43,8 +43,9 @@ public class TourController
 
 
     [HttpPost]
-    public Task Create(Tour tour)
+    public async Task<ActionResult<Tour>> Create(Tour tour)
     {
-        return _databaseService.CreateTour(tour);
+        await _databaseService.AddAsync(tour);
+        return tour;
     }
 }
