@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace velosaurus_backend.Models;
+namespace Velosaurus.Api.Models;
 
 public class Tour
 {

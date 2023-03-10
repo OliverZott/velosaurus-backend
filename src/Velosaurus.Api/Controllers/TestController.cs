@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace velosaurus_backend.Controllers;
+namespace Velosaurus.Api.Controllers;
 [Route("/")]
 [ApiController]
 public class TestController : ControllerBase

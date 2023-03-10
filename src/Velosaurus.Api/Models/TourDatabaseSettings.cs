@@ -1,4 +1,4 @@
-﻿namespace velosaurus_backend.Models;
+﻿namespace Velosaurus.Api.Models;
 
 public class TourDatabaseSettings
 {

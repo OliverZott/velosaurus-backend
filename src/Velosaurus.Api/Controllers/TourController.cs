@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using velosaurus_backend.Models;
-using velosaurus_backend.Services;
+using Velosaurus.Api.Models;
+using Velosaurus.Api.Services;
 
-namespace velosaurus_backend.Controllers;
+namespace Velosaurus.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

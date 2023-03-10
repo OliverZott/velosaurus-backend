@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using velosaurus_backend.Models;
+using Velosaurus.Api.Models;
 
-namespace velosaurus_backend.Services;
+namespace Velosaurus.Api.Services;
 
 public class TourDatabaseService
 {

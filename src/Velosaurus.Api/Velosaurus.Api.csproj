@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>velosaurus_backend</RootNamespace>
+    <RootNamespace>Velosaurus.Api</RootNamespace>
     <UserSecretsId>80c935c2-b923-46f6-8e8f-fbd2a0a724c0</UserSecretsId>
   </PropertyGroup>
 
