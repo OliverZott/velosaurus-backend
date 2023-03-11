@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Velosaurus.Api</RootNamespace>
     <UserSecretsId>80c935c2-b923-46f6-8e8f-fbd2a0a724c0</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,6 +28,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Velosaurus.DatabaseManager\Velosaurus.DatabaseManager.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -2,13 +2,10 @@
 
 - Backend: **ASP.Net Core**
 - Frontend: **React**
-- Database: **MongoDB**
+- Database:  **Postgres** ~~MongoDB~~
 - Repo & Pipelines: **Github**
-- Hosting: **Heroku** amd **Azure**
-    - <https://portal.azure.com/>
-    - <https://dashboard.heroku.com/>
-- DevOps: **Azure DevOps**
-    - <https://dev.azure.com/>
+- Hosting: [**Heroku**](https://dashboard.heroku.com/) amd [**Azure**](https://portal.azure.com/)
+- DevOps: [**Azure DevOps**](https://dev.azure.com/)
 
 ![Project Structure](velosaurus_architecture.jpg)
 
@@ -18,14 +15,30 @@
 - Serilog Seq sink: <http://localhost:5341/#/events>
 - App: <https://localhost:7269/swagger/index.html> or https://localhost:7019/swagger/index.html
 
-Deployment:
+Deployment Links:
 
 - <https://velosaurus-api.azurewebsites.net/swagger/index.html>
 - <https://velosaurus-api.azurewebsites.net/>
--
 - <https://github.com/OliverZott/velosaurus-backend/actions>
 - <https://portal.azure.com/>
 - <https://cloud.mongodb.com/>
+
+## Docker
+
+- **Dockerfile** / **docker-compose.yml**
+- `docker build -t velo-image .`
+- `docker run --name velo-container -p 8000:80 velo-image`
+- http://localhost:8000/swagger
+
+## Postgres commands
+
+```shell
+psql -U postgres
+\l 
+\c <dbname>
+\d
+SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_name='Tours';
+```
 
 ## Setup project
 
@@ -34,8 +47,7 @@ Deployment:
 - **Serilog** and **Seq**
     - **ps script** for checking and starting mongodb and seq service
 - Database driver and configuration (Secrets for Credentials)
-    - MongoDB
-    - Postgres
+    - Postgres ~~MongoDB~~
 
 ## Resources
 

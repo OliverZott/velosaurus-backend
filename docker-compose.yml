@@ -1,0 +1,38 @@
+﻿version: '3.4'
+
+services:
+
+  # PostgreSQL
+  velosaurusdb:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=Tour
+    ports:
+      - 5432:5432
+    #    volumes:
+    #    https://docs.divio.com/en/latest/reference/docker-docker-compose/
+    #    https://devopscell.com/docker/docker-compose/volumes/2018/01/16/volumes-in-docker-compose.html
+    #      - ./CreateSchema.sql:/docker-entrypoint-initdb.d/CreateSchema.sql
+    domainname: velosaurusdb
+  
+  # velosaurus API
+  velosaurus-api:
+    build:
+      context: .
+      dockerfile: /Dockerfile
+    depends_on:
+      - velosaurusdb
+    ports:
+      - 8000:80
+#    environment:
+#      DB_CONNECTION_STRING: "host=velosaurusdb;database=Tour;port=5432;username=postgres;password=password"  # WTF?
+
+
+
+
+volumes:
+  velosaurusdb:
+  driver: 
