@@ -5,13 +5,10 @@ namespace Velosaurus.Api.Controllers;
 [ApiController]
 public class TestController : ControllerBase
 {
-    private readonly IConfiguration _configuration;
-
-    public TestController(IConfiguration configuration)
+    public TestController()
     {
-        _configuration = configuration;
     }
 
     [HttpGet]
-    public string Get() => $"Hello There =)";
+    public string Hello() => $"Hello There =)";
 }

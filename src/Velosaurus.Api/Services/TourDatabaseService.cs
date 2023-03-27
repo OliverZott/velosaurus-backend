@@ -9,8 +9,7 @@ public class TourDatabaseService
     private readonly TourDbContext _context;
     private readonly ILogger<TourDatabaseService> _logger;
 
-    public TourDatabaseService(TourDbContext context, ILogger<TourDatabaseService> logger,
-        IConfiguration configuration)
+    public TourDatabaseService(TourDbContext context, ILogger<TourDatabaseService> logger)
     {
         _context = context;
         _logger = logger;
@@ -29,11 +28,12 @@ public class TourDatabaseService
         return await _context.Set<Tour>().ToListAsync();
     }
 
-    public async Task<Tour> GetAsync(int? id)
+    public async Task<Tour> GetAsync(int id)
     {
-        Tour? result = await _context.Set<Tour>().FindAsync(id);
+        var result = await _context.Set<Tour>().FindAsync(id);
         if (result is null)
         {
+            _logger.LogError("No Tour with id: {} found in database", id);
             throw new KeyNotFoundException($"No Tour with id: {id} found!");
         }
 

@@ -7,16 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Velosaurus.Api", "src\Velos
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{410E43E6-C152-4671-BB6E-41521E7DC8B5}"
 	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
+		.dockerignore = .dockerignore
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
 		.github\workflows\main_velosaurus-api.yml = .github\workflows\main_velosaurus-api.yml
 		README.md = README.md
 		velosaurus_architecture.jpg = velosaurus_architecture.jpg
-		.dockerignore = .dockerignore
-		Dockerfile = Dockerfile
-		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Velosaurus.DatabaseManager", "src\Velosaurus.DatabaseManager\Velosaurus.DatabaseManager.csproj", "{79B135A9-E02C-4B3D-86BA-F21C1590F427}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Velosaurus.DatabaseManager", "src\Velosaurus.DatabaseManager\Velosaurus.DatabaseManager.csproj", "{79B135A9-E02C-4B3D-86BA-F21C1590F427}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Velosaurus.Api.Test", "test\Velosaurus.Api.Test\Velosaurus.Api.Test.csproj", "{5A12F385-D19D-47A7-A3FD-799576E1AA84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +33,10 @@ Global
 		{79B135A9-E02C-4B3D-86BA-F21C1590F427}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79B135A9-E02C-4B3D-86BA-F21C1590F427}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79B135A9-E02C-4B3D-86BA-F21C1590F427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A12F385-D19D-47A7-A3FD-799576E1AA84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A12F385-D19D-47A7-A3FD-799576E1AA84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A12F385-D19D-47A7-A3FD-799576E1AA84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A12F385-D19D-47A7-A3FD-799576E1AA84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

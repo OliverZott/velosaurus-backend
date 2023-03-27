@@ -30,6 +30,19 @@ Deployment Links:
 - `docker run --name velo-container -p 8000:80 velo-image`
 - http://localhost:8000/swagger
 
+## TODO
+
+- Docker
+    - SQL scripts / migration on startup checken
+    - general improvements / cleanup
+    - external volume
+- Environments Dev / Prod(Demo)
+- UnitTests
+- Use DTOs for endpoints
+- Exception Middleware and Logging
+- Github Pipeline cleanup / build + unit tests
+- repository pattern / cqrs ?
+
 ## Postgres commands
 
 ```shell
@@ -75,7 +88,7 @@ SELECT table_name, column_name, data_type FROM information_schema.columns WHERE 
 - DTOs
     - for different API endpoints
 
-- ocker Container for local dev/testing
+- Docker Container for local dev/testing
 
 Patterns:
 
@@ -83,15 +96,16 @@ Patterns:
 - Repository Pattern ?
 - CQRS ? --> Probably complete overkill
 
-- DEPLOY
-    - Seq online - for hosted env
-    - Mongo online - Atlass instead local instance
-    - Deployment with Atlas
+DEPLOY:
+
+- Seq online - for hosted env
+- Mongo online - Atlas instead local instance
+- Deployment with Atlas
 
 ## Questions
 
 - How use ENUM in controller ?!
-- DTOs in frontende / backend ?! (how map api reponse on jsx object)
+- DTOs in frontend / backend ?! (how map api response on jsx object)
 
 ## Remarks
 

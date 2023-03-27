@@ -36,7 +36,7 @@ public class TourController
 
 
     [HttpGet("{id:int}")]
-    public Task<Tour> GetById(int? id)
+    public Task<Tour> GetById(int id)
     {
         return _databaseService.GetAsync(id);
     }
