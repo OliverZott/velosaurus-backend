@@ -12,34 +12,43 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '7.x.x', '6.x.x' ]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      
+      #- uses: microsoft/variable-substitution@v1 
+      #  with:
+      #      files: '**/appsettings.json'
+      #  env:
+      #      TourDatabase.DbConnectionString: ${{ secrets.DBCONNECTIONSTRING }}
+      #      App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
 
-      - uses: microsoft/variable-substitution@v1 
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v3
         with:
-            files: '**/appsettings.json'
-        env:
-            TourDatabase.DbConnectionString: ${{ secrets.DBCONNECTIONSTRING }}
-            App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
+          dotnet-version: ${{ matrix.dotnet-version }}
+          include-prerelease: false
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '6.0.x'
-          include-prerelease: true
+      - name: Install dependencies
+        run: dotnet restore
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
 
-      - name: dotnet publish
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+  
+  #      - name: dotnet publish
+  #        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+  #        
+  #      - name: Upload artifact for deployment job
+  #        uses: actions/upload-artifact@v2
+  #        with:
+  #          name: .net-app
+  #          path: ${{env.DOTNET_ROOT}}/myapp
 
   #deploy:
   #  runs-on: ubuntu-latest
