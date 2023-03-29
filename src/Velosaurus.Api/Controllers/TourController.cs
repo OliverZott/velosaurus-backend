@@ -45,7 +45,7 @@ public class TourController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Tour>> CreateTour(Tour tour)
     {
-        await _databaseService.AddAsync(tour);
+        await _databaseService.AddTourAsync(tour);
         //return tour;
         return CreatedAtAction("GetTourById", new { id = tour.Id });
 
