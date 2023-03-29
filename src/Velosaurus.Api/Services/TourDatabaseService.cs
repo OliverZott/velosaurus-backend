@@ -16,19 +16,19 @@ public class TourDatabaseService
         _logger.LogInformation("TourDatabaseService instantiated...");
     }
 
-    public async Task<Tour> AddAsync(Tour tour)
+    public async Task<Tour> AddTourAsync(Tour tour)
     {
         await _context.AddAsync(tour);
         await _context.SaveChangesAsync();
         return tour;
     }
 
-    public async Task<List<Tour>> GetAllAsync()
+    public async Task<List<Tour>> GetToursAsync()
     {
         return await _context.Set<Tour>().ToListAsync();
     }
 
-    public async Task<Tour> GetAsync(int id)
+    public async Task<Tour> GetTourAsync(int id)
     {
         var result = await _context.Set<Tour>().FindAsync(id);
         if (result is null)

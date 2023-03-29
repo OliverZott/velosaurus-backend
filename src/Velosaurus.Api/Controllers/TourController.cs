@@ -6,7 +6,7 @@ namespace Velosaurus.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TourController
+public class TourController : ControllerBase
 {
     private readonly TourDatabaseService _databaseService;
     private readonly ILogger<TourController> _logger;
@@ -20,11 +20,11 @@ public class TourController
 
 
     [HttpGet]
-    public async Task<List<Tour>?> Get()
+    public async Task<List<Tour>?> GetTours()
     {
         try
         {
-            return await _databaseService.GetAllAsync();
+            return await _databaseService.GetToursAsync();
         }
         catch (Exception e)
         {
@@ -36,16 +36,18 @@ public class TourController
 
 
     [HttpGet("{id:int}")]
-    public Task<Tour> GetById(int id)
+    public Task<Tour> GetTourById(int id)
     {
-        return _databaseService.GetAsync(id);
+        return _databaseService.GetTourAsync(id);
     }
 
 
     [HttpPost]
-    public async Task<ActionResult<Tour>> Create(Tour tour)
+    public async Task<ActionResult<Tour>> CreateTour(Tour tour)
     {
         await _databaseService.AddAsync(tour);
-        return tour;
+        //return tour;
+        return CreatedAtAction("GetTourById", new { id = tour.Id });
+
     }
 }
