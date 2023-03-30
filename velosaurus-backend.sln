@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.github\workflows\main_velosaurus-api.yml = .github\workflows\main_velosaurus-api.yml
 		README.md = README.md
 		velosaurus_architecture.jpg = velosaurus_architecture.jpg
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Velosaurus.DatabaseManager", "src\Velosaurus.DatabaseManager\Velosaurus.DatabaseManager.csproj", "{79B135A9-E02C-4B3D-86BA-F21C1590F427}"

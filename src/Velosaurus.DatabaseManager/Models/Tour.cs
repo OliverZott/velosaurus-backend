@@ -15,5 +15,6 @@ public enum TourType
 {
     MountainBike,
     Nordic,
-    Ski
+    Ski,
+    Hiking
 }
