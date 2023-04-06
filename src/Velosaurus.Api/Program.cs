@@ -3,14 +3,11 @@ using Serilog;
 using Velosaurus.Api.Services;
 using Velosaurus.DatabaseManager;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
-string? connectionString = builder.Configuration.GetConnectionString("TourDbConnectionString");
-builder.Services.AddDbContext<TourDbContext>(options =>
-{
-    options.UseNpgsql(connectionString);
-});
+var connectionString = builder.Configuration.GetConnectionString("TourDbConnectionString");
+builder.Services.AddDbContext<TourDbContext>(options => { options.UseNpgsql(connectionString); });
 
 builder.Services.AddControllers();
 
@@ -28,14 +25,14 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.AddScoped<TourDatabaseService>();
 
 
-WebApplication app = builder.Build();
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-using IServiceScope scope = app.Services.CreateScope();
-TourDbContext context = scope.ServiceProvider.GetRequiredService<TourDbContext>();
+using var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<TourDbContext>();
 await context.Database.MigrateAsync();
 
 app.UseHttpsRedirection();

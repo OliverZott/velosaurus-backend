@@ -1,24 +1,25 @@
 ﻿version: '3.4'
 
 services:
-
-  # PostgreSQL
+  
+  # Database
   velosaurusdb:
     image: postgres
     restart: always
+    container_name: velosaurus-db
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=Tour
+      - POSTGRES_DB=velosaurus
     ports:
-      - 5432:5432
-    #    volumes:
-    #    https://docs.divio.com/en/latest/reference/docker-docker-compose/
-    #    https://devopscell.com/docker/docker-compose/volumes/2018/01/16/volumes-in-docker-compose.html
-    #      - ./CreateSchema.sql:/docker-entrypoint-initdb.d/CreateSchema.sql
+      - "5432:5432"
+    volumes:
+      - velosaurusdb:/var/lib/postgresql/data
+
     domainname: velosaurusdb
   
-  # velosaurus API
+  
+  # Service
   velosaurus-api:
     build:
       context: .
@@ -26,13 +27,27 @@ services:
     depends_on:
       - velosaurusdb
     ports:
-      - 8000:80
-#    environment:
-#      DB_CONNECTION_STRING: "host=velosaurusdb;database=Tour;port=5432;username=postgres;password=password"  # WTF?
-
-
+      - "8000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DB_CONNECTION_STRING=host=velosaurusdb;database=Tour;port=5432;username=postgres;password=password
+  
+  
+  # PgAdmin
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@mail.com
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_LISTEN_PORT: 8001
+    ports:
+      - "8002:8001"
+    depends_on:
+      - velosaurusdb
+    volumes:
+      - pgadmin_vol:/var/lib/pgadmin
 
 
 volumes:
   velosaurusdb:
-  driver: 
+  pgadmin_vol:
