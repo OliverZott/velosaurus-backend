@@ -28,7 +28,7 @@ public class TourDatabaseService
         return await _context.Set<Tour>().ToListAsync();
     }
 
-    public async Task<Tour> GetTourAsync(int id)
+    public async Task<Tour?> GetTourAsync(int id)
     {
         var result = await _context.Set<Tour>().FindAsync(id);
         if (result is null)

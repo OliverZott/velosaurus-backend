@@ -36,9 +36,12 @@ public class TourController : ControllerBase
 
 
     [HttpGet("{id:int}")]
-    public Task<Tour> GetTourById(int id)
+    public async Task<Tour?> GetTourById(int id)
     {
-        return _databaseService.GetTourAsync(id);
+        _logger.LogError("FUCK ME");
+        var result = await _databaseService.GetTourAsync(id);
+        if (result is null) _logger.LogError("Error: Tour with id {Id} not found", id);
+        return result;
     }
 
 
@@ -46,8 +49,6 @@ public class TourController : ControllerBase
     public async Task<ActionResult<Tour>> CreateTour(Tour tour)
     {
         await _databaseService.AddTourAsync(tour);
-        //return tour;
-        return CreatedAtAction("GetTourById", new { id = tour.Id });
-
+        return CreatedAtAction(nameof(GetTourById), new { id = tour.Id }, tour);
     }
 }

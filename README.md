@@ -9,26 +9,28 @@
 
 ![Project Structure](velosaurus_architecture.jpg)
 
-## Start App
+## Prerequisites
+
+- Docker
+- .NET >7 SDK
+- Seq (optional)
+- PGAdmin (optional)
+- Postgres (optional)
+
+## Run App
+
+### local
 
 - `dotnet run`
 - Serilog Seq sink: <http://localhost:5341/#/events>
 - App: <https://localhost:7269/swagger/index.html> or https://localhost:7019/swagger/index.html
 
-Deployment Links:
+### docker
 
-- <https://velosaurus-api.azurewebsites.net/swagger/index.html>
-- <https://velosaurus-api.azurewebsites.net/>
-- <https://github.com/OliverZott/velosaurus-backend/actions>
-- <https://portal.azure.com/>
-- <https://cloud.mongodb.com/>
-
-## Docker
-
-- **Dockerfile** / **docker-compose.yml**
-- `docker build -t velo-image .`
-- `docker run --name velo-container -p 8000:80 velo-image`
-- http://localhost:8000/swagger
+- `docker-compose up`
+- App: <http://localhost:8000/swagger/index.html>
+- PGAdmin: <http://localhost:8002/browser/>
+- Serilog Seq sink: <http://localhost:5341/#/events>
 
 ## TODO
 
@@ -61,11 +63,6 @@ SELECT table_name, column_name, data_type FROM information_schema.columns WHERE 
     - **ps script** for checking and starting mongodb and seq service
 - Database driver and configuration (Secrets for Credentials)
     - Postgres ~~MongoDB~~
-
-## Resources
-
-- <https://www.mongodb.com/developer/languages/csharp/build-first-dotnet-core-application-mongodb-atlas/>
-- <https://www.mongodb.com/languages/how-to-use-mongodb-with-dotnet>
 
 ## Next steps
 
@@ -109,12 +106,12 @@ DEPLOY:
 
 ## Remarks
 
-### Serilog
+### Docker
 
-- <https://www.youtube.com/watch?v=MYKTwvowMUI>
-- <https://www.youtube.com/watch?v=hJ0QHRV3RPQ>
-    - <https://github.com/rstropek/htl-leo-pro-5/tree/master/lectures/0500-api-error-handling/WebApiErrorHandling.Server>
-- <https://www.youtube.com/watch?v=_iryZxv8Rxw>
+- **Dockerfile** / **docker-compose.yml**
+- `docker build -t velo-image .`
+- `docker run --name velo-container -p 8000:80 velo-image`
+- http://localhost:8000/swagger
 
 ### Seq
 
@@ -142,11 +139,30 @@ DEPLOY:
 
 - <https://docs.microsoft.com/en-us/aspnet/core/web-api/advanced/formatting?view=aspnetcore-6.0#configure-systemtextjson-based-formatters>
 
-### Error / Exception handling
+## Resources
 
-- <https://jasonwatmore.com/post/2022/01/17/net-6-global-error-handler-tutorial-with-example>
-- <https://weblogs.asp.net/fredriknormen/asp-net-web-api-exception-handling>
-- <https://stackoverflow.com/questions/10732644/best-practice-to-return-errors-in-asp-net-web-api>
-- <https://docs.microsoft.com/en-us/aspnet/web-api/overview/error-handling/exception-handling>
-- <https://docs.microsoft.com/en-us/aspnet/core/web-api/handle-errors?view=aspnetcore-6.0>
-- <https://docs.microsoft.com/en-us/aspnet/core/fundamentals/error-handling?view=aspnetcore-6.0>
+Docker:
+
+- https://docs.divio.com/en/latest/reference/docker-docker-compose/
+- https://devopscell.com/docker/docker-compose/volumes/2018/01/16/volumes-in-docker-compose.html
+- `./CreateSchema.sql:/docker-entrypoint-initdb.d/CreateSchema.sql`
+
+MongoDB:
+
+- <https://www.mongodb.com/developer/languages/csharp/build-first-dotnet-core-application-mongodb-atlas/>
+- <https://www.mongodb.com/languages/how-to-use-mongodb-with-dotnet>
+
+Deployment Links:
+
+- <https://velosaurus-api.azurewebsites.net/swagger/index.html>
+- <https://velosaurus-api.azurewebsites.net/>
+- <https://github.com/OliverZott/velosaurus-backend/actions>
+- <https://portal.azure.com/>
+- <https://cloud.mongodb.com/>
+
+Serilog:
+
+- <https://www.youtube.com/watch?v=MYKTwvowMUI>
+- <https://www.youtube.com/watch?v=hJ0QHRV3RPQ>
+    - <https://github.com/rstropek/htl-leo-pro-5/tree/master/lectures/0500-api-error-handling/WebApiErrorHandling.Server>
+- <https://www.youtube.com/watch?v=_iryZxv8Rxw>
