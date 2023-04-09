@@ -15,7 +15,6 @@ services:
       - "5432:5432"
     volumes:
       - velosaurusdb:/var/lib/postgresql/data
-
     domainname: velosaurusdb
   
   
@@ -30,7 +29,8 @@ services:
       - "8000:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DB_CONNECTION_STRING=host=velosaurusdb;database=Tour;port=5432;username=postgres;password=password
+      - DB_CONNECTION_STRING=host=velosaurusdb;database=velosaurus;port=5432;username=postgres;password=password
+      - Serilog:WriteTo:0:Args:pathFormat=/logs/log-{Date}.txt
   
   
   # PgAdmin
