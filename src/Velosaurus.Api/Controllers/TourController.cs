@@ -38,7 +38,6 @@ public class TourController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<Tour?> GetTourById(int id)
     {
-        _logger.LogError("FUCK ME");
         var result = await _databaseService.GetTourAsync(id);
         if (result is null) _logger.LogError("Error: Tour with id {Id} not found", id);
         return result;

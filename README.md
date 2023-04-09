@@ -30,6 +30,7 @@
 - `docker-compose up`
 - App: <http://localhost:8000/swagger/index.html>
 - PGAdmin: <http://localhost:8002/browser/>
+    - to get Host name/address: `docker inspect <database> | grep IPAddress`
 - Serilog Seq sink: <http://localhost:5341/#/events>
 
 ## TODO
