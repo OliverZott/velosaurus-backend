@@ -31,7 +31,14 @@
 - App: <http://localhost:8000/swagger/index.html>
 - PGAdmin: <http://localhost:8002/browser/>
     - to get Host name/address: `docker inspect <database> | grep IPAddress`
-- Serilog Seq sink: <http://localhost:5341/#/events>
+    - name: velosaurus
+    - host: name / address: IPAddress
+    - Port: 5432
+    - username: postgres  (as defined in docker-compose.yml)
+    - password: password  (as defined in docker-compose.yml)
+- Serilog Seq sink: <http://localhost:5341/#/events>  (optional, has to be installed)
+  -  TODO: seq in container ??? 
+- `docker compose down -v`  
 
 ## TODO
 

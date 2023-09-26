@@ -14,8 +14,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - velosaurusdb:/var/lib/postgresql/data
-    domainname: velosaurusdb
+      - velosaurus-data:/var/lib/postgresql/data
   
   
   # Service
@@ -29,7 +28,7 @@ services:
       - "8000:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DB_CONNECTION_STRING=host=velosaurusdb;database=velosaurus;port=5432;username=postgres;password=password
+      - ConnectionStrings__TourDbConnectionString=Host=velosaurusdb; Database=velosaurus; Port=5432; User Id=postgres; Password=password
       - Serilog:WriteTo:0:Args:pathFormat=/logs/log-{Date}.txt
   
   
@@ -45,9 +44,11 @@ services:
     depends_on:
       - velosaurusdb
     volumes:
-      - pgadmin_vol:/var/lib/pgadmin
+      - pgadmin-vol:/var/lib/pgadmin
+    links:
+      - velosaurusdb
 
 
 volumes:
-  velosaurusdb:
-  pgadmin_vol:
+  velosaurus-data:
+  pgadmin-vol:
