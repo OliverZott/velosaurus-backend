@@ -4,6 +4,7 @@ using Velosaurus.DatabaseManager.Models;
 
 namespace Velosaurus.Api.Services;
 
+// TODO: if global exception handling --> remove all unnecessary try-catch blocks
 public class TourDatabaseService
 {
     private readonly TourDbContext _context;
@@ -30,13 +31,17 @@ public class TourDatabaseService
 
     public async Task<Tour?> GetTourAsync(int id)
     {
-        var result = await _context.Set<Tour>().FindAsync(id);
-        if (result is null)
+        try
         {
-            _logger.LogError("No Tour with id: {} found in database", id);
-            throw new KeyNotFoundException($"No Tour with id: {id} found!");
-        }
+            var tour = await _context.Set<Tour>().FindAsync(id);
+            if (tour is null) _logger.LogError("No Tour with id: {} found in database", id);
 
-        return result;
+            return tour;
+        }
+        catch (Exception exc)
+        {
+            Console.WriteLine(exc.Message);
+            return null;
+        }
     }
 }

@@ -4,6 +4,8 @@ using Velosaurus.DatabaseManager.Models;
 
 namespace Velosaurus.Api.Controllers;
 
+// TODO: global exception handling with specific error objects
+// TODO: datetime converter and respective exception handling / default datetime.now
 [ApiController]
 [Route("api/[controller]")]
 public class TourController : ControllerBase
@@ -36,11 +38,13 @@ public class TourController : ControllerBase
 
 
     [HttpGet("{id:int}")]
-    public async Task<Tour?> GetTourById(int id)
+    public async Task<ActionResult<Tour>> GetTourById(int id)
     {
         var result = await _databaseService.GetTourAsync(id);
-        if (result is null) _logger.LogError("Error: Tour with id {Id} not found", id);
-        return result;
+        if (result is not null) return Ok(result);
+
+        _logger.LogError("Error: Tour with id {Id} not found", id);
+        return NotFound(new { error = $"No Tour with id: {id} found!" }); // TODO: specific error object across api
     }
 
 

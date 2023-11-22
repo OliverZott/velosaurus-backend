@@ -40,6 +40,15 @@
   -  TODO: seq in container ??? 
 - `docker compose down -v`  
 
+## Issues
+
+- Linux postgres port problems: check port usage `sudo lsof -i :5434` and `sudo kill -9 <PID>`
+  - adapt docker-compose.yml: 
+  ```yml
+  velosaurusdb:
+    ports:
+      - "5434:5432"
+  ```
 ## TODO
 
 - Docker
