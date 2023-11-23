@@ -27,7 +27,7 @@
 
 ### docker
 
-- `docker-compose up`
+- `docker-compose up` or `docker compose up --build`
 - App: <http://localhost:8000/swagger/index.html>
 - PGAdmin: <http://localhost:8002/browser/>
     - to get Host name/address: `docker inspect <database> | grep IPAddress`

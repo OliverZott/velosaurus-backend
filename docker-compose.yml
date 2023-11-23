@@ -30,6 +30,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__TourDbConnectionString=Host=velosaurusdb; Database=velosaurus; Port=5432; User Id=postgres; Password=password
       - Serilog:WriteTo:0:Args:pathFormat=/logs/log-{Date}.txt
+    container_name: velosaurus-api
   
   
   # PgAdmin
@@ -47,6 +48,7 @@ services:
       - pgadmin-vol:/var/lib/pgadmin
     links:
       - velosaurusdb
+    container_name: velosaurus-pgadmin
 
 
 volumes:

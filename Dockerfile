@@ -4,12 +4,16 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-COPY . .
+ARG BUILD_CONFIGURATION=Release
+COPY ["src/Velosaurus.Api/Velosaurus.Api.csproj", "src/Velosaurus.Api/"]
+COPY ["src/Velosaurus.DatabaseManager/Velosaurus.DatabaseManager.csproj", "src/Velosaurus.DatabaseManager/"]
+RUN dotnet restore "src/Velosaurus.DatabaseManager/Velosaurus.DatabaseManager.csproj"
 RUN dotnet restore "src/Velosaurus.Api/Velosaurus.Api.csproj"
-RUN dotnet build "src/Velosaurus.Api/Velosaurus.Api.csproj" -c Release -o /app/build
+COPY . .
+RUN dotnet build "src/Velosaurus.Api/Velosaurus.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "src/Velosaurus.Api/Velosaurus.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "src/Velosaurus.Api/Velosaurus.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 
 FROM base AS final
 WORKDIR /app

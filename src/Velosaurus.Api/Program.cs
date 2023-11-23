@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Velosaurus.Api.Services;
-using Velosaurus.Api.Utils;
 using Velosaurus.DatabaseManager;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("TourDbConnectionString");
 builder.Services.AddDbContext<TourDbContext>(options => { options.UseNpgsql(connectionString); });
 
-// builder.Services.AddControllers();
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.Converters.Add(new CustomDateTimeConverter());
-});
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer(); // https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen();

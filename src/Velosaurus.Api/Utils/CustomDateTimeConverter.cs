@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -29,5 +30,15 @@ public class CustomDateTimeConverter : JsonConverter<DateTime>
         Console.WriteLine("CustomDateTimeConverter.Write called");
 
         writer.WriteStringValue(value.ToString("O"));
+    }
+}
+
+
+public class UtcDateTimeConverter : ValueConverter<DateTime, DateTime>
+{
+    public UtcDateTimeConverter() : base(
+        v => v.ToUniversalTime(),
+        v => DateTime.SpecifyKind(v, DateTimeKind.Utc))
+    {
     }
 }
