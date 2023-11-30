@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Velosaurus.Core\Velosaurus.Core.csproj" />
     <ProjectReference Include="..\Velosaurus.DatabaseManager\Velosaurus.DatabaseManager.csproj" />
   </ItemGroup>
 

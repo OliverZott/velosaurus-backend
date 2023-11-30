@@ -4,7 +4,6 @@ using Velosaurus.DatabaseManager.Models;
 
 namespace Velosaurus.Api.Services;
 
-// TODO: if global exception handling --> remove all unnecessary try-catch blocks
 public class TourDatabaseService
 {
     private readonly TourDbContext _context;

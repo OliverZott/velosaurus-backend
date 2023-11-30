@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Velosaurus.Api.Services;
+using Velosaurus.Core.Middleware.ExceptionMiddleware;
 using Velosaurus.DatabaseManager;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Host.UseSerilog((context, configuration) =>
     configuration.WriteTo.Console().ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddScoped<TourDatabaseService>();
+//builder.Services.AddSingleton<ExceptionHandler>();
 
 
 var app = builder.Build();
@@ -30,6 +32,10 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+
+// Register Middleware Code
+app.UseMiddleware<ExceptionMiddleware>();
 
 using var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<TourDbContext>();
