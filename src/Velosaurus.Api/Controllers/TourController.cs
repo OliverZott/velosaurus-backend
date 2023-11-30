@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Velosaurus.Api.DTO;
 using Velosaurus.Api.Services;
 using Velosaurus.Core.Exceptions;
 using Velosaurus.DatabaseManager.Models;
@@ -10,34 +12,41 @@ namespace Velosaurus.Api.Controllers;
 public class TourController : ControllerBase
 {
     private readonly TourDatabaseService _databaseService;
+    private readonly IMapper _mapper;
 
 
-    public TourController(ILogger logger, TourDatabaseService databaseService)
+    public TourController(ILogger<TourController> logger, TourDatabaseService databaseService, IMapper mapper)
     {
         _databaseService = databaseService;
+        _mapper = mapper;
         logger.LogInformation("TourController instantiated...");
     }
 
 
     [HttpGet]
-    public async Task<List<Tour>?> GetTours()
+    public async Task<ActionResult<List<GetTourDto>>> GetTours()
     {
-        return await _databaseService.GetToursAsync();
+        var tours = await _databaseService.GetToursAsync();
+        var tourDtos = _mapper.Map<List<GetTourDto>>(tours);
+        return Ok(tourDtos);
     }
 
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Tour>> GetTourById(int id)
+    public async Task<ActionResult<GetTourDto>> GetTourById(int id)
     {
         var tour = await _databaseService.GetTourAsync(id);
-
-        return tour == null ? throw new ItemNotFoundException("Tour", id) : (ActionResult<Tour>)Ok(tour);
+        var tourDto = _mapper.Map<GetTourDto>(tour);
+        return tour == null ? throw new ItemNotFoundException("Tour", id) : Ok(tourDto);
     }
 
 
     [HttpPost]
-    public async Task<ActionResult<Tour>> CreateTour(Tour tour)
+    public async Task<ActionResult<Tour>> CreateTour(CreateTourDto createTourDto)
     {
+        if (createTourDto.Date == DateTime.MinValue) createTourDto.Date = DateTime.UtcNow;
+
+        var tour = _mapper.Map<Tour>(createTourDto);
         await _databaseService.AddTourAsync(tour);
         return CreatedAtAction(nameof(GetTourById), new { id = tour.Id }, tour);
     }

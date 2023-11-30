@@ -8,7 +8,7 @@ public class TourDatabaseService
 {
     private readonly TourDbContext _context;
 
-    public TourDatabaseService(TourDbContext context, ILogger logger)
+    public TourDatabaseService(TourDbContext context, ILogger<TourDatabaseService> logger)
     {
         _context = context;
         logger.LogInformation("TourDatabaseService instantiated...");

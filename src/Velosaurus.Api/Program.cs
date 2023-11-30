@@ -26,6 +26,8 @@ builder.Host.UseSerilog((context, configuration) =>
 builder.Services.AddScoped<TourDatabaseService>();
 //builder.Services.AddSingleton<ExceptionHandler>();
 
+// scan all assemblies for classes inheriting from AutoMapper’s Profile class and register them with AutoMapper.
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
