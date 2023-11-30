@@ -12,7 +12,7 @@ public class TourController : ControllerBase
     private readonly TourDatabaseService _databaseService;
 
 
-    public TourController(ILogger<TourController> logger, TourDatabaseService databaseService)
+    public TourController(ILogger logger, TourDatabaseService databaseService)
     {
         _databaseService = databaseService;
         logger.LogInformation("TourController instantiated...");
@@ -29,8 +29,9 @@ public class TourController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Tour>> GetTourById(int id)
     {
-        var result = await _databaseService.GetTourAsync(id);
-        return result == null ? throw new ItemNotFoundException("Tour", id) : (ActionResult<Tour>)Ok(result);
+        var tour = await _databaseService.GetTourAsync(id);
+
+        return tour == null ? throw new ItemNotFoundException("Tour", id) : (ActionResult<Tour>)Ok(tour);
     }
 
 
