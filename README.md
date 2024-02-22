@@ -72,6 +72,11 @@ psql -U postgres
 SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_name='Tours';
 ```
 
+## Postgres database updates (Migrations)
+
+- Add-Migration MigrationDescription
+- Update Database
+
 ## Setup project
 
 - Create Project and Solution `ASP.NET Core Web API`

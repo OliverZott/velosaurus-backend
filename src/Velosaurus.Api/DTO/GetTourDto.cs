@@ -2,5 +2,5 @@
 
 public class GetTourDto : TourDto
 {
-    public string TourType { get; set; } = null!;
+    public int Id { get; set; }
 }

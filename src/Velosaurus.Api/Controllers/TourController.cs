@@ -36,7 +36,7 @@ public class TourController : ControllerBase
     public async Task<ActionResult<GetTourDto>> GetTourById(int id)
     {
         var tour = await _databaseService.GetTourAsync(id);
-        var tourDto = _mapper.Map<GetTourDto>(tour);
+        var tourDto = _mapper.Map<GetTourDetailDto>(tour);
         return tour == null ? throw new ItemNotFoundException("Tour", id) : Ok(tourDto);
     }
 

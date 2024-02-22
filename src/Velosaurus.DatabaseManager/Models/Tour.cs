@@ -9,6 +9,7 @@ public class Tour
     public float Length { get; set; }
     public float AltitudeGain { get; set; }
     public TourType TourType { get; set; }
+    public string Description { get; set; } = null!;
 }
 
 public enum TourType
