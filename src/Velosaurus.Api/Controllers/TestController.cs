@@ -10,5 +10,5 @@ public class TestController : ControllerBase
     }
 
     [HttpGet]
-    public string Hello() => $"Hello There John =)";
+    public string Hello() => $"Hello There =)";
 }
