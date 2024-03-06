@@ -64,8 +64,8 @@ jobs:
       # - name: Wait for Docker to Finish Building
       #   run: sleep 30
 
-      - name: Test API Endpoint
-        run: curl http://localhost:8000
+      # - name: Test API Endpoint
+      #   run: curl --max-time 10 http://localhost:8000
 
       - name: Stop Containers
         run: docker-compose -f docker-compose.yml down

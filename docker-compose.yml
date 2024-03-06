@@ -21,7 +21,7 @@ services:
   velosaurus-api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfil
     depends_on:
       - velosaurusdb
     ports:
