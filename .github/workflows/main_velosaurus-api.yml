@@ -65,7 +65,7 @@ jobs:
       #   run: sleep 30
 
       - name: Test API Endpoint
-        run: curl http://localhost:8000/api/hello
+        run: curl http://localhost:8000
 
       - name: Stop Containers
         run: docker-compose -f docker-compose.yml down
