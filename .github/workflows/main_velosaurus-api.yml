@@ -48,7 +48,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      - name: Test
+      - name: Unit tests
         run: dotnet test --no-restore --verbosity normal
   
 
@@ -59,7 +59,7 @@ jobs:
         run: docker-compose config --quiet && printf "OK\n" || printf "ERROR\n"
 
       - name: Set Up Docker Environment
-        run: docker-compose -f ../../docker-compose.yml up -d
+        run: docker-compose -f docker-compose.yml up -d
 
       # - name: Wait for Docker to Finish Building
       #   run: sleep 30
@@ -68,7 +68,7 @@ jobs:
         run: curl http://localhost:8000/api/hello
 
       - name: Stop Containers
-        run: docker-compose -f ../../docker-compose.yml down
+        run: docker-compose -f docker-compose.yml down
 
 
 

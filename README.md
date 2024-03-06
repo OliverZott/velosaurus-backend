@@ -79,6 +79,7 @@ SELECT table_name, column_name, data_type FROM information_schema.columns WHERE 
 
 ## Github Pipeline
 
+- File paths arerelative to the root of the repository (GitHub Actions workflows run in the context of your repository.)
 - **Github Secret** and **env vars** for connectionstring
 - **main_velosaurus-api.yml** adaption to substitute before deployment
 
