@@ -85,54 +85,15 @@ SELECT table_name, column_name, data_type FROM information_schema.columns WHERE 
 
 ## Next steps
 
-- Docker
-  - SQL scripts / migration on startup checken
-  - general improvements / cleanup
-  - external volume
 - Environments Dev / Prod(Demo)
 - UnitTests
-- Use DTOs for endpoints
-- Exception Middleware and Logging
-- Github Pipeline cleanup / build + unit tests
-- repository pattern / cqrs ?
+- Github Pipeline cleanup and optimization
+- Patterns:
+  - Unit Of Work ?
+  - Repository Pattern ?
+  - CQRS ? (Probably complete overkill)
 
-### Frontend
-
-- Bootstrap for Tour list example page
-- Resolve enum in forntend
-  - How use ENUM in controller ?!
-- Post request formular in frontend
-- DTOs in frontende / backend ?! (how map api reponse on jsx object)
-
-### Backend
-
-- Exception handling
-  - global
-
-- Logging
-  - where? only in global exc handling?
-
-- DTOs
-  - for different API endpoints
-
-- Docker Container for local dev/testing
-
-Patterns:
-
-- Unit Of Work ?
-- Repository Pattern ?
-- CQRS ? --> Probably complete overkill
-
-DEPLOY:
-
-- Seq online - for hosted env
-- Mongo online - Atlas instead local instance
-- Deployment with Atlas
-
-## Questions
-
-- How use ENUM in controller ?!
-- DTOs in frontend / backend ?! (how map api response on jsx object)
+- DEPLOYMENT?
 
 ## Remarks
 
