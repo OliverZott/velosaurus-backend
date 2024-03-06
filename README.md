@@ -11,11 +11,11 @@
 
 ## Prerequisites
 
-- Docker
-- .NET >7 SDK
+- .NET 8 SDK
+- Postgres
+- Docker (if run containerized)
 - Seq (optional)
 - PGAdmin (optional)
-- Postgres (optional)
 
 ## Run App
 
@@ -23,46 +23,37 @@
 
 - `dotnet run`
 - Serilog Seq sink: <http://localhost:5341/#/events>
-- App: <https://localhost:7269/swagger/index.html> or https://localhost:7019/swagger/index.html
+- App: <https://localhost:7269/swagger/index.html> or <https://localhost:7019/swagger/index.html>
 
 ### docker
 
 - `docker-compose up` or `docker compose up --build`
 - App: <http://localhost:8000/swagger/index.html>
 - PGAdmin: <http://localhost:8002/browser/>
-    - to get Host name/address: `docker inspect <database> | grep IPAddress`
-    - name: velosaurus
-    - host: name / address: IPAddress
-    - Port: 5432
-    - username: postgres  (as defined in docker-compose.yml)
-    - password: password  (as defined in docker-compose.yml)
+  - to get Host name/address: `docker inspect <database> | grep IPAddress`
+  - name: velosaurus
+  - host: name / address: IPAddress
+  - Port: 5432
+  - username: postgres  (as defined in docker-compose.yml)
+  - password: password  (as defined in docker-compose.yml)
 - Serilog Seq sink: <http://localhost:5341/#/events>  (optional, has to be installed)
-  -  TODO: seq in container ??? 
+  - TODO: seq in container ???
 - `docker compose down -v`  
 
-## Issues
+### Issues
 
 - Linux postgres port problems: check port usage `sudo lsof -i :5434` and `sudo kill -9 <PID>`
-  - adapt docker-compose.yml: 
+  - adapt docker-compose.yml:
+
   ```yml
   velosaurusdb:
     ports:
       - "5434:5432"
   ```
-## TODO
 
-- Docker
-    - SQL scripts / migration on startup checken
-    - general improvements / cleanup
-    - external volume
-- Environments Dev / Prod(Demo)
-- UnitTests
-- Use DTOs for endpoints
-- Exception Middleware and Logging
-- Github Pipeline cleanup / build + unit tests
-- repository pattern / cqrs ?
+## Postgres
 
-## Postgres commands
+### Postgres commands
 
 ```shell
 psql -U postgres
@@ -72,7 +63,7 @@ psql -U postgres
 SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_name='Tours';
 ```
 
-## Postgres database updates (Migrations)
+### Postgres database updates (Migrations)
 
 - Add-Migration MigrationDescription
 - Update Database
@@ -82,30 +73,46 @@ SELECT table_name, column_name, data_type FROM information_schema.columns WHERE 
 - Create Project and Solution `ASP.NET Core Web API`
 - **CORS** configuration [Link](https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0)
 - **Serilog** and **Seq**
-    - **ps script** for checking and starting mongodb and seq service
+  - **ps script** for checking and starting mongodb and seq service
 - Database driver and configuration (Secrets for Credentials)
-    - Postgres ~~MongoDB~~
+  - Postgres ~~MongoDB~~
+
+## Github Pipeline
+
+- **Github Secret** and **env vars** for connectionstring
+- **main_velosaurus-api.yml** adaption to substitute before deployment
 
 ## Next steps
+
+- Docker
+  - SQL scripts / migration on startup checken
+  - general improvements / cleanup
+  - external volume
+- Environments Dev / Prod(Demo)
+- UnitTests
+- Use DTOs for endpoints
+- Exception Middleware and Logging
+- Github Pipeline cleanup / build + unit tests
+- repository pattern / cqrs ?
 
 ### Frontend
 
 - Bootstrap for Tour list example page
 - Resolve enum in forntend
-    - How use ENUM in controller ?!
+  - How use ENUM in controller ?!
 - Post request formular in frontend
 - DTOs in frontende / backend ?! (how map api reponse on jsx object)
 
 ### Backend
 
 - Exception handling
-    - global
+  - global
 
 - Logging
-    - where? only in global exc handling?
+  - where? only in global exc handling?
 
 - DTOs
-    - for different API endpoints
+  - for different API endpoints
 
 - Docker Container for local dev/testing
 
@@ -133,7 +140,7 @@ DEPLOY:
 - **Dockerfile** / **docker-compose.yml**
 - `docker build -t velo-image .`
 - `docker run --name velo-container -p 8000:80 velo-image`
-- http://localhost:8000/swagger
+- <http://localhost:8000/swagger>
 
 ### Seq
 
@@ -148,14 +155,9 @@ DEPLOY:
 - <https://www.youtube.com/watch?v=exXavNOqaVo>
 
 - Add configuration and configuration model
-    - `appsettings.json`
-    - settings class in `Models` directory, to store appsettings properties
-    - `Program.cs`
-
-#### Deployment & Access
-
-- **Github Secret** for connectionstring
-- **main_velosaurus-api.yml** adaption to substitute nefore deployment
+  - `appsettings.json`
+  - settings class in `Models` directory, to store appsettings properties
+  - `Program.cs`
 
 ### Json Serializer
 
@@ -165,8 +167,8 @@ DEPLOY:
 
 Docker:
 
-- https://docs.divio.com/en/latest/reference/docker-docker-compose/
-- https://devopscell.com/docker/docker-compose/volumes/2018/01/16/volumes-in-docker-compose.html
+- <https://docs.divio.com/en/latest/reference/docker-docker-compose/>
+- <https://devopscell.com/docker/docker-compose/volumes/2018/01/16/volumes-in-docker-compose.html>
 - `./CreateSchema.sql:/docker-entrypoint-initdb.d/CreateSchema.sql`
 
 MongoDB:
@@ -186,5 +188,5 @@ Serilog:
 
 - <https://www.youtube.com/watch?v=MYKTwvowMUI>
 - <https://www.youtube.com/watch?v=hJ0QHRV3RPQ>
-    - <https://github.com/rstropek/htl-leo-pro-5/tree/master/lectures/0500-api-error-handling/WebApiErrorHandling.Server>
+  - <https://github.com/rstropek/htl-leo-pro-5/tree/master/lectures/0500-api-error-handling/WebApiErrorHandling.Server>
 - <https://www.youtube.com/watch?v=_iryZxv8Rxw>

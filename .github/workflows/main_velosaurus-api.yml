@@ -7,7 +7,9 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+    paths-ignore:
+      - 'README.md'
+  workflow_dispatch:  # for running manually in github/actions view
 
 jobs:
   build:
@@ -19,6 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+
+    # =====================================================================================================
+    # substitute env vars and secrets
+
       #- uses: microsoft/variable-substitution@v1 
       #  with:
       #      files: '**/appsettings.json'
@@ -26,11 +32,15 @@ jobs:
       #      TourDatabase.DbConnectionString: ${{ secrets.DBCONNECTIONSTRING }}
       #      App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
 
+
+
+    # =====================================================================================================
+    # build and run unit tests
+
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-          include-prerelease: false
 
       - name: Install dependencies
         run: dotnet restore
@@ -41,16 +51,45 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --verbosity normal
   
-  #      - name: dotnet publish
-  #        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-  #        
-  #      - name: Upload artifact for deployment job
-  #        uses: actions/upload-artifact@v2
-  #        with:
-  #          name: .net-app
-  #          path: ${{env.DOTNET_ROOT}}/myapp
 
-  #deploy:
+    # =====================================================================================================
+    # Test docker compose file
+
+      - name: Validate docker-compose file syntax
+        run: docker-compose config --quiet && printf "OK\n" || printf "ERROR\n"
+
+      - name: Set Up Docker Environment
+        run: docker-compose -f ../../docker-compose.yml up -d
+
+      # - name: Wait for Docker to Finish Building
+      #   run: sleep 30
+
+      - name: Test API Endpoint
+        run: curl http://localhost:8000/api/hello
+
+      - name: Stop Containers
+        run: docker-compose -f ../../docker-compose.yml down
+
+
+
+
+    # =====================================================================================================
+    # publish and upload artifact
+
+       # - name: dotnet publish
+       #   run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+         
+       # - name: Upload artifact for deployment job
+       #   uses: actions/upload-artifact@v2
+       #   with:
+       #     name: .net-app
+       #     path: ${{env.DOTNET_ROOT}}/myapp
+
+
+
+    # =====================================================================================================
+    # deploy:
+
   #  runs-on: ubuntu-latest
   #  needs: build
   #  environment:
