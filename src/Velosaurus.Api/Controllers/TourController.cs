@@ -44,7 +44,7 @@ public class TourController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Tour>> CreateTour(CreateTourDto createTourDto)
     {
-        if (createTourDto.Date == DateTime.MinValue) createTourDto.Date = DateTime.UtcNow;
+        if (createTourDto.Date == DateTime.MinValue) createTourDto.Date = DateTime.UtcNow.AddHours(2);
 
         var tour = _mapper.Map<Tour>(createTourDto);
         await _databaseService.AddTourAsync(tour);
