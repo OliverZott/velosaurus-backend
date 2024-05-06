@@ -1,8 +1,16 @@
 name: Publish Docker image
 
 on:
+  workflow_run:
+    workflows: ["Build, UnitTest, Docker-check"]
+    types:
+      - completed
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'README.md'
+  workflow_dispatch:  # for running manually in github/actions view
+
 
 jobs:
   push_to_registry:
