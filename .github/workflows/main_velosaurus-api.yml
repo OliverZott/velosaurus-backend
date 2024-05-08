@@ -1,12 +1,13 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - velosaurus-api
+name: Build, UnitTest, Docker-check
 
 on:
   push:
     branches:
       - main
+      - "*"
     paths-ignore:
       - 'README.md'
   workflow_dispatch:  # for running manually in github/actions view
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: [ '7.x.x', '8.x.x' ]
+        dotnet-version: [ '8.x.x' ]
 
     steps:
       - uses: actions/checkout@v4
