@@ -36,7 +36,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 
-// Register Middleware Code
+// Register Middleware components to the pipeline early to catch exceptions before other middleware
 app.UseMiddleware<ExceptionMiddleware>();
 
 using var scope = app.Services.CreateScope();

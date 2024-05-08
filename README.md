@@ -53,6 +53,10 @@
 
 ## Postgres
 
+### psql in docker container
+
+- `docker exec -it velosaurus-db psql -U postgres`
+
 ### Postgres commands
 
 ```shell
@@ -61,6 +65,7 @@ psql -U postgres
 \c <dbname>
 \d
 SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_name='Tours';
+SELECT * from "Tours";
 ```
 
 ### Postgres database updates (Migrations)
