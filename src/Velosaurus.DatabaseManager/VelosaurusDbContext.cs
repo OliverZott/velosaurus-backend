@@ -5,12 +5,12 @@ namespace Velosaurus.DatabaseManager;
 
 public class VelosaurusDbContext(DbContextOptions contextOptions) : DbContext(contextOptions)
 {
-    public DbSet<Tour>? Tours { get; set; }
-    public DbSet<Mountain>? Mountains { get; set; }
+    public DbSet<Activity>? Activities { get; set; }
+    public DbSet<Location>? Locations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Tour>().HasKey(t => new { t.Id });
-        modelBuilder.Entity<Mountain>().HasKey(t => new { t.Id });
+        modelBuilder.Entity<Activity>().HasKey(t => new { t.Id });
+        modelBuilder.Entity<Location>().HasKey(t => new { t.Id });
     }
 }

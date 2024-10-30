@@ -2,7 +2,7 @@ using Velosaurus.Api.Controllers;
 
 namespace Velosaurus.Api.Test;
 
-public class TourControllerTest
+public class ActivityControllerTest
 {
     [SetUp]
     public void Setup()

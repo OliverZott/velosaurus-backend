@@ -1,8 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Velosaurus.DatabaseManager.Models;
 
-public class Mountain : IEntity
+// TODO: change to area/destination
+
+[Table("Locations")]
+public class Location : BaseEntity
 {
     [MaxLength(50)]
     [Required]
@@ -11,8 +15,5 @@ public class Mountain : IEntity
     [MaxLength(50)]
     public string? Region { get; set; }
 
-    public IList<Tour> Tours { get; set; } = new List<Tour>();
-
-    [Key]
-    public int Id { get; set; }
+    public IList<Activity> Activities { get; set; } = new List<Activity>();
 }

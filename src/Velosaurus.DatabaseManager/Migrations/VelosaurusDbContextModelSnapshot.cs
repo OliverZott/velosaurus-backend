@@ -11,7 +11,7 @@ using Velosaurus.DatabaseManager;
 namespace Velosaurus.DatabaseManager.Migrations
 {
     [DbContext(typeof(VelosaurusDbContext))]
-    partial class TourDbContextModelSnapshot : ModelSnapshot
+    partial class VelosaurusDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,47 @@ namespace Velosaurus.DatabaseManager.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Mountain", b =>
+            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Activity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ActivityType")
+                        .HasColumnType("integer");
+
+                    b.Property<float>("AltitudeGain")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
+                    b.Property<float>("Length")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Activities");
+                });
+
+            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,63 +81,21 @@ namespace Velosaurus.DatabaseManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Mountains");
+                    b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Tour", b =>
+            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Activity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                    b.HasOne("Velosaurus.DatabaseManager.Models.Location", "Location")
+                        .WithMany("Activities")
+                        .HasForeignKey("LocationId");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<float>("AltitudeGain")
-                        .HasColumnType("real");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
-
-                    b.Property<float>("Length")
-                        .HasColumnType("real");
-
-                    b.Property<int>("MountainId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("TourName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<int>("TourType")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MountainId");
-
-                    b.ToTable("Tours");
+                    b.Navigation("Location");
                 });
 
-            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Tour", b =>
+            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Location", b =>
                 {
-                    b.HasOne("Velosaurus.DatabaseManager.Models.Mountain", "Mountain")
-                        .WithMany("Tours")
-                        .HasForeignKey("MountainId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Mountain");
-                });
-
-            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Mountain", b =>
-                {
-                    b.Navigation("Tours");
+                    b.Navigation("Activities");
                 });
 #pragma warning restore 612, 618
         }

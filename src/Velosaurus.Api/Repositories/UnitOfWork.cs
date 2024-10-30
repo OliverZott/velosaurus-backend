@@ -3,25 +3,31 @@ using Velosaurus.DatabaseManager.Models;
 
 namespace Velosaurus.Api.Repositories;
 
-public class UnitOfWork(
-    VelosaurusDbContext velosaurusDbContext,
-    IGenericRepository<Tour>? tour,
-    IGenericRepository<Mountain>? mountain
-) : IUnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
-    public IGenericRepository<Tour> Tour { get; } = tour ?? throw new ArgumentNullException(nameof(tour));
+    private readonly VelosaurusDbContext _velosaurusDbContext;
 
-    public IGenericRepository<Mountain> Mountain { get; } =
-        mountain ?? throw new ArgumentNullException(nameof(mountain));
+    public UnitOfWork(VelosaurusDbContext velosaurusDbContext,
+        IGenericRepository<Activity>? activity,
+        IGenericRepository<Location>? location)
+    {
+        _velosaurusDbContext = velosaurusDbContext;
+        Activity = activity ?? throw new ArgumentNullException(nameof(activity));
+        Location = location ?? throw new ArgumentNullException(nameof(location));
+    }
+
+    public IGenericRepository<Activity> Activity { get; }
+
+    public IGenericRepository<Location> Location { get; }
 
     public void Dispose()
     {
-        velosaurusDbContext.Dispose();
+        _velosaurusDbContext.Dispose();
         GC.SuppressFinalize(this);
     }
 
     public async Task<int> Complete()
     {
-        return await velosaurusDbContext.SaveChangesAsync();
+        return await _velosaurusDbContext.SaveChangesAsync();
     }
 }

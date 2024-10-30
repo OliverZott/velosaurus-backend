@@ -9,7 +9,7 @@ using Velosaurus.DatabaseManager.Models;
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("TourDbConnectionString");
+var connectionString = builder.Configuration.GetConnectionString("ActivityDbConnectionString");
 builder.Services.AddDbContext<VelosaurusDbContext>(options => { options.UseNpgsql(connectionString); });
 
 builder.Services.AddControllers();
@@ -25,8 +25,8 @@ builder.Services.AddCors(options =>
 builder.Host.UseSerilog((context, configuration) =>
     configuration.WriteTo.Console().ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddScoped<IGenericRepository<Tour>, GenericRepository<Tour>>();
-builder.Services.AddScoped<IGenericRepository<Mountain>, GenericRepository<Mountain>>();
+builder.Services.AddScoped<IGenericRepository<Activity>, GenericRepository<Activity>>();
+builder.Services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //builder.Services.AddSingleton<ExceptionHandler>();
 

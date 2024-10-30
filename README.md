@@ -51,7 +51,12 @@
       - "5434:5432"
   ```
 
-## Postgres
+## Database (Postgres)
+
+### Postgres database updates (Migrations)
+
+- `Add-Migration MigrationDescription`
+- `Update-Database`
 
 ### psql in docker container
 
@@ -64,14 +69,9 @@ psql -U postgres
 \l 
 \c <dbname>
 \d
-SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_name='Tours';
-SELECT * from "Tours";
+SELECT table_name, column_name, data_type FROM information_schema.columns WHERE table_name='Activities';
+SELECT * from "Activities";
 ```
-
-### Postgres database updates (Migrations)
-
-- Add-Migration MigrationDescription
-- Update Database
 
 ## Setup project
 

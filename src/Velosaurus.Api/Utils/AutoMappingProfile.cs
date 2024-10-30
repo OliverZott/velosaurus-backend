@@ -8,9 +8,9 @@ public class AutoMappingProfile : Profile
 {
     public AutoMappingProfile()
     {
-        CreateMap<Tour, GetTourDto>()
-            .ForMember(dest => dest.TourType, opt => opt.MapFrom(src => src.TourType.ToString())).ReverseMap();
-        CreateMap<CreateTourDto, Tour>();
-        CreateMap<GetTourDetailDto, Tour>().ReverseMap();
+        CreateMap<Activity, GetActivityDto>()
+            .ForMember(dest => dest.ActivityType, opt => opt.MapFrom(src => src.ActivityType.ToString())).ReverseMap();
+        CreateMap<CreateActivityDto, Activity>();
+        CreateMap<GetActivityDetailDto, Activity>().ReverseMap();
     }
 }

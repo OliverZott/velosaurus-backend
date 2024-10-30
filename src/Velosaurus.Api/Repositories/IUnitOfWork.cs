@@ -4,6 +4,6 @@ namespace Velosaurus.Api.Repositories;
 
 public interface IUnitOfWork : IDisposable
 {
-    IGenericRepository<Tour> Tour { get; }
-    IGenericRepository<Mountain> Mountain { get; }
+    IGenericRepository<Activity> Activity { get; }
+    IGenericRepository<Location> Location { get; }
 }
