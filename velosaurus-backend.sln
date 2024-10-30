@@ -20,7 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Velosaurus.DatabaseManager"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Velosaurus.Api.Test", "test\Velosaurus.Api.Test\Velosaurus.Api.Test.csproj", "{5A12F385-D19D-47A7-A3FD-799576E1AA84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Velosaurus.Core", "src\Velosaurus.Core\Velosaurus.Core.csproj", "{7F58724E-0375-4DCB-BC7A-5A1881C8FBF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Velosaurus.Core", "src\Velosaurus.Core\Velosaurus.Core.csproj", "{7F58724E-0375-4DCB-BC7A-5A1881C8FBF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
