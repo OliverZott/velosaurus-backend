@@ -1,14 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Velosaurus.Api.Repositories;
 using Velosaurus.Api.Services;
 using Velosaurus.Core.Middleware.ExceptionMiddleware;
 using Velosaurus.DatabaseManager;
+using Velosaurus.DatabaseManager.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 var connectionString = builder.Configuration.GetConnectionString("TourDbConnectionString");
-builder.Services.AddDbContext<TourDbContext>(options => { options.UseNpgsql(connectionString); });
+builder.Services.AddDbContext<VelosaurusDbContext>(options => { options.UseNpgsql(connectionString); });
 
 builder.Services.AddControllers();
 
@@ -23,7 +25,9 @@ builder.Services.AddCors(options =>
 builder.Host.UseSerilog((context, configuration) =>
     configuration.WriteTo.Console().ReadFrom.Configuration(context.Configuration));
 
-builder.Services.AddScoped<TourDatabaseService>();
+builder.Services.AddScoped<IGenericRepository<Tour>, GenericRepository<Tour>>();
+builder.Services.AddScoped<IGenericRepository<Mountain>, GenericRepository<Mountain>>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //builder.Services.AddSingleton<ExceptionHandler>();
 
 // scan all assemblies for classes inheriting from AutoMapper’s Profile class and register them with AutoMapper.
@@ -40,7 +44,7 @@ app.UseSwaggerUI();
 app.UseMiddleware<ExceptionMiddleware>();
 
 using var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetRequiredService<TourDbContext>();
+var context = scope.ServiceProvider.GetRequiredService<VelosaurusDbContext>();
 await context.Database.MigrateAsync();
 
 app.UseHttpsRedirection();

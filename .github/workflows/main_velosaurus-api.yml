@@ -10,7 +10,7 @@ on:
       - "*"
     paths-ignore:
       - 'README.md'
-  workflow_dispatch:  # for running manually in github/actions view
+  workflow_dispatch:  # for running manually in GitHub/actions view
 
 jobs:
   build:

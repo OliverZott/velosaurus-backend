@@ -10,7 +10,7 @@ using Velosaurus.DatabaseManager;
 
 namespace Velosaurus.DatabaseManager.Migrations
 {
-    [DbContext(typeof(TourDbContext))]
+    [DbContext(typeof(VelosaurusDbContext))]
     partial class TourDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
@@ -21,6 +21,28 @@ namespace Velosaurus.DatabaseManager.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Mountain", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Region")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Mountains");
+                });
 
             modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Tour", b =>
                 {
@@ -38,21 +60,44 @@ namespace Velosaurus.DatabaseManager.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
 
                     b.Property<float>("Length")
                         .HasColumnType("real");
 
+                    b.Property<int>("MountainId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("TourName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("TourType")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("MountainId");
+
                     b.ToTable("Tours");
+                });
+
+            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Tour", b =>
+                {
+                    b.HasOne("Velosaurus.DatabaseManager.Models.Mountain", "Mountain")
+                        .WithMany("Tours")
+                        .HasForeignKey("MountainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Mountain");
+                });
+
+            modelBuilder.Entity("Velosaurus.DatabaseManager.Models.Mountain", b =>
+                {
+                    b.Navigation("Tours");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,9 +6,9 @@ namespace Velosaurus.Api.Services;
 
 public class TourDatabaseService
 {
-    private readonly TourDbContext _context;
+    private readonly VelosaurusDbContext _context;
 
-    public TourDatabaseService(TourDbContext context, ILogger<TourDatabaseService> logger)
+    public TourDatabaseService(VelosaurusDbContext context, ILogger<TourDatabaseService> logger)
     {
         _context = context;
         logger.LogInformation("TourDatabaseService instantiated...");

@@ -11,7 +11,7 @@ using Velosaurus.DatabaseManager;
 
 namespace Velosaurus.DatabaseManager.Migrations
 {
-    [DbContext(typeof(TourDbContext))]
+    [DbContext(typeof(VelosaurusDbContext))]
     [Migration("20230310144606_Initial")]
     partial class Initial
     {
