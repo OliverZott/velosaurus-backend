@@ -96,6 +96,10 @@ SELECT * from "Activities";
 
 ## Next steps
 
+- location properties: name, summit, mountain range, subgroup
+  - e.g. Mutters, Saile, Stubai Alps, Kalkkögel
+
+
 - Environments Dev / Prod(Demo)
 - UnitTests
 - Github Pipeline cleanup and optimization

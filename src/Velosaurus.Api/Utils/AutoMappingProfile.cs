@@ -10,7 +10,21 @@ public class AutoMappingProfile : Profile
     {
         CreateMap<Activity, GetActivityDto>()
             .ForMember(dest => dest.ActivityType, opt => opt.MapFrom(src => src.ActivityType.ToString())).ReverseMap();
-        CreateMap<CreateActivityDto, Activity>();
+        CreateMap<CreateActivityDto, Activity>()
+            .ForMember(dest => dest.ActivityType, opt => opt.MapFrom(src => src.ActivityType.ToString())).ReverseMap();
         CreateMap<GetActivityDetailDto, Activity>().ReverseMap();
+
+        CreateMap<LocationDto, Location>().ReverseMap();
+        CreateMap<GetLocationDetailDto, Location>().ReverseMap();
+
+        CreateMap<Location, GetLocationDetailDto>()
+            .ForMember(dest => dest.Activities, opt => opt.MapFrom(src => src.Activities.Select(a => new ActivityDto
+            {
+                Name = a.Name,
+                Date = a.Date,
+                Length = a.Length,
+                AltitudeGain = a.AltitudeGain,
+                ActivityType = a.ActivityType // Ensuring the enum is mapped to its string representation
+            }))).ReverseMap();
     }
 }

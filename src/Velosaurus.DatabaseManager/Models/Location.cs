@@ -15,5 +15,5 @@ public class Location : BaseEntity
     [MaxLength(50)]
     public string? Region { get; set; }
 
-    public IList<Activity> Activities { get; set; } = new List<Activity>();
+    public IList<Activity> Activities { get; set; } = [];
 }

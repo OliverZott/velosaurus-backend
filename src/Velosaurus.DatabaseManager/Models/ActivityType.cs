@@ -2,7 +2,7 @@
 
 public enum ActivityType
 {
-    LocationBike,
+    Bike,
     Nordic,
     Ski,
     Hiking

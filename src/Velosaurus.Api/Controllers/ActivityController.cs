@@ -35,14 +35,14 @@ public class ActivityController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<ActionResult<GetActivityDto>> GetActivityById(int id)
     {
-        var activity = await _unitOfWork.Activity.GetAsync(id, t => t.Location);
+        var activity = await _unitOfWork.Activity.GetAsync(id, a => a.Location);
         var activityDto = _mapper.Map<GetActivityDetailDto>(activity);
         return activity == null ? throw new ItemNotFoundException("Activity", id) : Ok(activityDto);
     }
 
 
     [HttpPost]
-    public async Task<ActionResult<Activity>> CreateActivity(CreateActivityDto createActivityDto)
+    public async Task<ActionResult<Activity>> PostActivity(CreateActivityDto createActivityDto)
     {
         if (createActivityDto.Date == DateTime.MinValue) createActivityDto.Date = DateTime.UtcNow.AddHours(2);
 
