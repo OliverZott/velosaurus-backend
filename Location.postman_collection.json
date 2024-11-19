@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "71d082a6-ec36-40ab-b137-6bed213f700b",
+		"name": "Location",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39031891"
+	},
+	"item": [
+		{
+			"name": "locations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Location",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Location"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "locations",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/Location",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Location"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2024 16:29:45 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"name\": \"Saile\",\n        \"region\": \"Stubai Alps (Kalkkögel)\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "location by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Location/1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Location",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "location by id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/Location/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Location",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2024 16:29:50 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"name\": \"Saile\",\n    \"region\": \"Stubai Alps (Kalkkögel)\",\n    \"activities\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "location",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Saile\",\r\n  \"region\": \"Stubai Alps (Kalkkögel)\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Location",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Location"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "location by id Copy",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Saile\",\r\n  \"region\": \"Stubai Alps (Kalkkögel)\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/Location",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Location"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2024 16:28:18 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Location",
+							"value": "https://localhost:7019/api/Location/1"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"name\": \"Saile\",\n    \"region\": \"Stubai Alps (Kalkkögel)\",\n    \"activities\": [],\n    \"id\": 1\n}"
+				}
+			]
+		}
+	]
+}
