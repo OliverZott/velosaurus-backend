@@ -11,10 +11,14 @@
 
 ## Prerequisites
 
-- .NET 8 SDK
+- .NET 9 SDK
 - Postgres
 - Docker (if run containerized)
-- Seq (optional)
+- Seq (optional - Serilog Sink 
+  - https://datalust.co/download)
+  - `seq service status`
+  - `seq service start`
+  - `seq config get -k api.listenUris`
 - PGAdmin (optional)
 
 ## Run App
@@ -28,7 +32,9 @@
 ### docker
 
 - `docker-compose up` or `docker compose up --build`
-- App: <http://localhost:8000/swagger/index.html>
+- App: 
+  - <http://localhost:8000/swagger/index.html>
+  - <http://localhost:8000/api/Activity/1>
 - PGAdmin: <http://localhost:8002/browser/>
   - to get Host name/address: `docker inspect <database> | grep IPAddress`
   - name: velosaurus
