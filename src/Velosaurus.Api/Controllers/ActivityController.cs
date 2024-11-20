@@ -4,7 +4,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Velosaurus.Api.DTO;
 using Velosaurus.Api.Repositories;
-using Velosaurus.Core.Exceptions;
 using Velosaurus.DatabaseManager.Models;
 
 namespace Velosaurus.Api.Controllers;
@@ -29,7 +28,7 @@ public class ActivityController : ControllerBase
     {
         if (pageNumber < 1 || pageSize < 1) return BadRequest("Page number and size must be greaten than 0");
 
-        var (activities, activityCount) = await _unitOfWork.Activity.GetAllAsync(pageNumber, pageSize);
+        var (activities, activityCount) = await _unitOfWork.Activity.GetAllPaginatedAsync(pageNumber, pageSize);
         var pageCount = (int)Math.Ceiling(activityCount / (double)pageSize);
 
         var activityDtos = _mapper.Map<List<GetActivityDto>>(activities);
@@ -62,15 +61,13 @@ public class ActivityController : ControllerBase
         return Ok(serializedPagedResponse);
     }
 
-
     [HttpGet("{id:int}")]
     public async Task<ActionResult<GetActivityDto>> GetActivityById(int id)
     {
         var activity = await _unitOfWork.Activity.GetAsync(id, a => a.Location);
         var activityDto = _mapper.Map<GetActivityDetailDto>(activity);
-        return activity == null ? throw new ItemNotFoundException("Activity", id) : Ok(activityDto);
+        return Ok(activityDto);
     }
-
 
     [HttpPost]
     public async Task<ActionResult<Activity>> PostActivity(CreateActivityDto createActivityDto)
@@ -91,7 +88,7 @@ public class ActivityController : ControllerBase
 
         _mapper.Map(createActivityDto, activity); // mapping on existing object (instead of creating new object)
 
-        await _unitOfWork.Activity.UpdateAsync(activity);
+        await _unitOfWork.Activity.UpdateAsync(activity!);
         return NoContent();
     }
 

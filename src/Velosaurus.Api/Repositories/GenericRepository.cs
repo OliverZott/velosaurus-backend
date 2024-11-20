@@ -6,26 +6,27 @@ using Velosaurus.DatabaseManager.Models;
 
 namespace Velosaurus.Api.Repositories;
 
-public class GenericRepository<T> : IGenericRepository<T>
-    where T : BaseEntity
+public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
 {
     private readonly VelosaurusDbContext _context;
+
 
     public GenericRepository(VelosaurusDbContext context)
     {
         _context = context;
     }
 
-    public async Task<T?> GetAsync(int id, params Expression<Func<T, object>>[] includeProperties)
+
+    public async Task<T> GetAsync(int id, params Expression<Func<T, object>>[] includeProperties)
     {
         IQueryable<T> query = _context.Set<T>();
 
         foreach (var includeProperty in includeProperties) query = query.Include(includeProperty);
         var entity = await query.FirstOrDefaultAsync(entity => entity.Id == id);
-        return entity;
+        return entity ?? throw new ItemNotFoundException($"{typeof(T)}", id);
     }
 
-    public async Task<(List<T>, int activitiesCount)> GetAllAsync(int pageNumber, int pageSize)
+    public async Task<(List<T>, int activitiesCount)> GetAllPaginatedAsync(int pageNumber, int pageSize)
     {
         var activitiesCount = await _context.Set<T>().CountAsync();
 
@@ -42,6 +43,11 @@ public class GenericRepository<T> : IGenericRepository<T>
         await _context.AddAsync(entity);
         await _context.SaveChangesAsync();
         return entity;
+    }
+
+    public async Task<List<T>> GetAllAsync()
+    {
+        return await _context.Set<T>().OrderByDescending(a => a.Id).ToListAsync();
     }
 
     public async Task UpdateAsync(T entity)
