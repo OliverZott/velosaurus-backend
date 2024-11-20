@@ -5,13 +5,13 @@ namespace Velosaurus.Api.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly VelosaurusDbContext _velosaurusDbContext;
+    private readonly VelosaurusDbContext _context;
 
     public UnitOfWork(VelosaurusDbContext velosaurusDbContext,
         IGenericRepository<Activity>? activity,
         IGenericRepository<Location>? location)
     {
-        _velosaurusDbContext = velosaurusDbContext;
+        _context = velosaurusDbContext;
         Activity = activity ?? throw new ArgumentNullException(nameof(activity));
         Location = location ?? throw new ArgumentNullException(nameof(location));
     }
@@ -22,12 +22,12 @@ public class UnitOfWork : IUnitOfWork
 
     public void Dispose()
     {
-        _velosaurusDbContext.Dispose();
+        _context.Dispose();
         GC.SuppressFinalize(this);
     }
 
-    public async Task<int> Complete()
+    public async Task<int> CompleteAsync()
     {
-        return await _velosaurusDbContext.SaveChangesAsync();
+        return await _context.SaveChangesAsync();
     }
 }

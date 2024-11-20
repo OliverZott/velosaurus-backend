@@ -19,7 +19,6 @@ public class ActivityController : ControllerBase
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        logger.LogInformation("ActivityController instantiated...");
     }
 
 
@@ -49,5 +48,26 @@ public class ActivityController : ControllerBase
         var activity = _mapper.Map<Activity>(createActivityDto);
         await _unitOfWork.Activity.AddAsync(activity);
         return CreatedAtAction(nameof(GetActivityById), new { id = activity.Id }, activity);
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateActivity(int id, [FromBody] CreateActivityDto createActivityDto)
+    {
+        if (!ModelState.IsValid || id < 1) return BadRequest(ModelState);
+
+        var activity = await _unitOfWork.Activity.GetAsync(id, a => a.Location);
+
+        _mapper.Map(createActivityDto, activity); // mapping on existing object (instead of creating new object)
+
+        await _unitOfWork.Activity.UpdateAsync(activity);
+        return NoContent();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteActivity(int id)
+    {
+        await _unitOfWork.Activity.GetAsync(id);  // checking if it even exists
+        await _unitOfWork.Activity.DeleteAsync(id);
+        return NoContent();
     }
 }

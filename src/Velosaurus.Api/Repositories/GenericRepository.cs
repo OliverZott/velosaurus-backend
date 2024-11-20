@@ -16,7 +16,6 @@ public class GenericRepository<T> : IGenericRepository<T>
         _context = context;
     }
 
-    // TODO get locations/activities respectively for parent
     public async Task<T?> GetAsync(int id, params Expression<Func<T, object>>[] includeProperties)
     {
         IQueryable<T> query = _context.Set<T>();
@@ -38,18 +37,22 @@ public class GenericRepository<T> : IGenericRepository<T>
         return entity;
     }
 
-    public async Task<T> UpdateAsync(T entity)
+    public async Task UpdateAsync(T entity)
     {
+        // Set<T> is for set-oriented operations and querying.
+        //_context.Set<T>().Update(entity);  
+
+        // Entry<T>() provides detailed control over individual entity states.
+        //_context.Entry<T>(entity).State = EntityState.Modified;  
+
+        //Update<T>() simplifies the process of updating an entire entity and also sets entity state.
         _context.Update(entity); // also sets entity state to modified
         await _context.SaveChangesAsync();
-        return entity;
     }
 
     public async Task DeleteAsync(int id)
     {
-        var entity = await GetAsync(id);
-
-        if (entity == null) throw new ItemNotFoundException(typeof(T).Name, id);
+        var entity = await GetAsync(id) ?? throw new ItemNotFoundException(typeof(T).Name, id);
 
         _context.Set<T>().Remove(entity);
         await _context.SaveChangesAsync();
