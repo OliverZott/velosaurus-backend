@@ -22,11 +22,18 @@ public class ExceptionMiddleware
     {
         try
         {
+            var request = context.Request;
+            _logger.LogInformation("Handling request: {method} {path} from {ip}",
+                context.Request.Method,
+                context.Request.Path,
+                context.Connection.RemoteIpAddress?.ToString());
             await _requestDelegate(context);
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Exception while processing {path}: '{message}'", context.Request.Path, e.Message);
+            _logger.LogError(e, "LogError: Exception while processing {path}: '{message}'",
+                context.Request.Path,
+                e.Message);
             _ = _exceptionHandler.HandleExceptionAsync(context, e);
         }
     }
