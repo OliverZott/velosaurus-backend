@@ -15,8 +15,11 @@ public class AutoMappingProfile : Profile
         CreateMap<GetActivityDetailDto, Activity>().ReverseMap();
 
         CreateMap<LocationDto, Location>().ReverseMap();
-        CreateMap<GetLocationDetailDto, Location>().ReverseMap();
+        CreateMap<Location, LocationDto>().ReverseMap();
 
+        CreateMap<GetLocationDto, Location>().ReverseMap();
+
+        CreateMap<GetLocationDetailDto, Location>().ReverseMap();
         CreateMap<Location, GetLocationDetailDto>()
             .ForMember(dest => dest.Activities, opt => opt.MapFrom(src => src.Activities.Select(a => new ActivityDto
             {

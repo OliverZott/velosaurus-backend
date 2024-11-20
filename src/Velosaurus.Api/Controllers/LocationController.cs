@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Velosaurus.Api.DTO;
 using Velosaurus.Api.Repositories;
-using Velosaurus.Core.Exceptions;
 using Velosaurus.DatabaseManager.Models;
 
 namespace Velosaurus.Api.Controllers;
@@ -23,14 +22,12 @@ public class LocationController : ControllerBase
     }
 
 
-
-
     // GET: api/<Location>
     [HttpGet]
-    public async Task<IEnumerable<LocationDto>> GetLocationsAsync(int pageNumber = 1, int pageSize = 3)
+    public async Task<IEnumerable<LocationDto>> GetLocationsAsync()
     {
-        var locations = await unitOfWork.Location.GetAllAsync(pageNumber, pageSize);
-        var locationDtos = mapper.Map<List<LocationDto>>(locations).ToList();
+        var locations = await unitOfWork.Location.GetAllAsync();
+        var locationDtos = mapper.Map<List<GetLocationDto>>(locations).ToList();
         return locationDtos;
     }
 
@@ -40,7 +37,7 @@ public class LocationController : ControllerBase
     {
         var location = await unitOfWork.Location.GetAsync(id, l => l.Activities);
         var locationDto = mapper.Map<GetLocationDetailDto>(location);
-        return location == null ? throw new ItemNotFoundException("Location", id) : Ok(locationDto);
+        return Ok(locationDto);
     }
 
     // POST api/<Location>
@@ -53,14 +50,24 @@ public class LocationController : ControllerBase
     }
 
     // PUT api/<Location>/5
-    [HttpPut("{id}")]
-    public void Put(int id, [FromBody] string value)
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateLocation(int id, [FromBody] LocationDto locationDto)
     {
+        if (!ModelState.IsValid || id < 0) return BadRequest(ModelState);
+
+        var location = await unitOfWork.Location.GetAsync(id);
+        mapper.Map(locationDto, location);
+
+        await unitOfWork.Location.UpdateAsync(location!);
+        return NoContent();
     }
 
     // DELETE api/<Location>/5
-    [HttpDelete("{id}")]
-    public void Delete(int id)
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteLocation(int id)
     {
+        await unitOfWork.Location.GetAsync(id);
+        await unitOfWork.Location.DeleteAsync(id);
+        return NoContent();
     }
 }
