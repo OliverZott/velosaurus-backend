@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Text.Json;
 using Velosaurus.Api.Repositories;
-using Velosaurus.Api.Services;
 using Velosaurus.Core.Middleware.ExceptionMiddleware;
 using Velosaurus.DatabaseManager;
 using Velosaurus.DatabaseManager.Models;
@@ -12,7 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ActivityDbConnectionString");
 builder.Services.AddDbContext<VelosaurusDbContext>(options => { options.UseNpgsql(connectionString); });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o =>
+    {
+        o.JsonSerializerOptions.WriteIndented = true;
+        o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    });
 
 builder.Services.AddEndpointsApiExplorer(); // https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSwaggerGen();

@@ -46,6 +46,7 @@ public class ActivityController : ControllerBase
 
         var pagedResponse = new PagedResponse<GetActivityDto>(activityDtos, metadata);
 
+        // TODO remove as soons as global JsonSerializer options work correctly
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
