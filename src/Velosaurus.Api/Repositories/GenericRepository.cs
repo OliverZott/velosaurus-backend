@@ -25,9 +25,16 @@ public class GenericRepository<T> : IGenericRepository<T>
         return entity;
     }
 
-    public async Task<List<T>> GetAllAsync()
+    public async Task<(List<T>, int activitiesCount)> GetAllAsync(int pageNumber, int pageSize)
     {
-        return await _context.Set<T>().ToListAsync();
+        var activitiesCount = await _context.Set<T>().CountAsync();
+
+        var activities = await _context.Set<T>()
+            .OrderByDescending(a => a.Id)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+        return (activities, activitiesCount);
     }
 
     public async Task<T> AddAsync(T entity)

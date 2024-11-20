@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Velosaurus.Api.DTO;
 using Velosaurus.Api.Repositories;
 using Velosaurus.Core.Exceptions;
@@ -23,11 +25,40 @@ public class ActivityController : ControllerBase
 
 
     [HttpGet]
-    public async Task<ActionResult<List<GetActivityDto>>> GetActivities()
+    public async Task<ActionResult<List<GetActivityDto>>> GetActivities(int pageNumber = 1, int pageSize = 3)
     {
-        var activities = await _unitOfWork.Activity.GetAllAsync();
+        if (pageNumber < 1 || pageSize < 1) return BadRequest("Page number and size must be greaten than 0");
+
+        var (activities, activityCount) = await _unitOfWork.Activity.GetAllAsync(pageNumber, pageSize);
+        var pageCount = (int)Math.Ceiling(activityCount / (double)pageSize);
+
         var activityDtos = _mapper.Map<List<GetActivityDto>>(activities);
-        return Ok(activityDtos);
+
+        var metadata = new PaginationMetadata
+        {
+            TotalItems = activityCount,
+            PageSize = pageSize,
+            CurrentPage = pageNumber,
+            TotalPages = pageCount,
+            HasNextPage = pageNumber < pageCount,
+            HasPreviousPage = pageNumber > 1
+        };
+
+        var pagedResponse = new PagedResponse<GetActivityDto>(activityDtos, metadata);
+
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+            Converters =
+            {
+                new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+            }
+        };
+
+        string serializedPagedResponse = JsonSerializer.Serialize(pagedResponse, options);
+
+        return Ok(serializedPagedResponse);
     }
 
 

@@ -27,9 +27,9 @@ public class LocationController : ControllerBase
 
     // GET: api/<Location>
     [HttpGet]
-    public async Task<IEnumerable<LocationDto>> GetLocationsAsync()
+    public async Task<IEnumerable<LocationDto>> GetLocationsAsync(int pageNumber = 1, int pageSize = 3)
     {
-        var locations = await unitOfWork.Location.GetAllAsync();
+        var locations = await unitOfWork.Location.GetAllAsync(pageNumber, pageSize);
         var locationDtos = mapper.Map<List<LocationDto>>(locations).ToList();
         return locationDtos;
     }
