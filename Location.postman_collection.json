@@ -133,7 +133,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Nordkette (Inntalkette\",\r\n  \"region\": \"Karwendel\"\r\n}",
+					"raw": "{\r\n  \"name\": \"Nordkette (Inntalkette)\",\r\n  \"region\": \"Karwendel\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -236,7 +236,7 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "location",
 			"request": {
 				"method": "DELETE",
 				"header": [],
