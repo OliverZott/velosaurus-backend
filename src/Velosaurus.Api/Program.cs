@@ -27,8 +27,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("MyAllowAllPolicy", p => p.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 });
 
-builder.Host.UseSerilog((context, configuration) =>
-    configuration.WriteTo.Console().ReadFrom.Configuration(context.Configuration));
+builder.Logging.ClearProviders();
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddScoped<IGenericRepository<Activity>, GenericRepository<Activity>>();
 builder.Services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();

@@ -23,6 +23,7 @@ public class ExceptionMiddleware
         try
         {
             var request = context.Request;
+            // TODO remark structured logging
             _logger.LogInformation("Handling request: {method} {path} from {ip}",
                 context.Request.Method,
                 context.Request.Path,
