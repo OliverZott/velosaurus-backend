@@ -3,7 +3,7 @@
 - Backend: **ASP.Net Core**
 - Frontend: **React**
 - Database:  **Postgres** ~~MongoDB~~
-- Repo & Pipelines: **Github**
+- Repo & Pipelines: **GitHub**
 - Hosting: [**Heroku**](https://dashboard.heroku.com/) amd [**Azure**](https://portal.azure.com/)
 - DevOps: [**Azure DevOps**](https://dev.azure.com/)
 
@@ -45,6 +45,14 @@
 - Serilog Seq sink: <http://localhost:5341/#/events>  (optional, has to be installed)
   - TODO: seq in container ???
 - `docker compose down -v`  
+
+Connect to postgres container:
+- `docker container exec -it xxxxxxxxxx bash`
+- `psql -U postgres`
+- `\l`
+- `\c velosaurus`
+- `\dt`
+- `select * from "Tours";`
 
 ### Issues
 
@@ -90,8 +98,8 @@ SELECT * from "Activities";
 
 ## Github Pipeline
 
-- File paths arerelative to the root of the repository (GitHub Actions workflows run in the context of your repository.)
-- **Github Secret** and **env vars** for connectionstring
+- File paths are relative to the root of the repository (GitHub Actions workflows run in the context of your repository.)
+- **GitHub Secret** and **env vars** for connection string
 - **main_velosaurus-api.yml** adaption to substitute before deployment
 
 ## Next steps
@@ -102,7 +110,7 @@ SELECT * from "Activities";
 
 - Environments Dev / Prod(Demo)
 - UnitTests
-- Github Pipeline cleanup and optimization
+- GitHub Pipeline cleanup and optimization
 - Patterns:
   - Unit Of Work ?
   - Repository Pattern ?
@@ -126,14 +134,14 @@ SELECT * from "Activities";
 
 ### MongoDB
 
-- NO Entityframework Core (best for relational databases!)
+- NO Entity framework Core (best for relational databases!)
 - MongoDb.Driver nuget
 - <https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-6.0&tabs=visual-studio>
 - <https://www.youtube.com/watch?v=exXavNOqaVo>
 
 - Add configuration and configuration model
   - `appsettings.json`
-  - settings class in `Models` directory, to store appsettings properties
+  - settings class in `Models` directory, to store app settings properties
   - `Program.cs`
 
 ### Json Serializer
