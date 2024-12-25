@@ -45,7 +45,7 @@ public class ActivityController : ControllerBase
 
         var pagedResponse = new PagedResponse<GetActivityDto>(activityDtos, metadata);
 
-        // TODO remove as soons as global JsonSerializer options work correctly
+        // TODO remove as soon as global JsonSerializer options work correctly
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -56,7 +56,7 @@ public class ActivityController : ControllerBase
             }
         };
 
-        string serializedPagedResponse = JsonSerializer.Serialize(pagedResponse, options);
+        var serializedPagedResponse = JsonSerializer.Serialize(pagedResponse);
 
         return Ok(serializedPagedResponse);
     }
@@ -66,7 +66,7 @@ public class ActivityController : ControllerBase
     {
         var activity = await _unitOfWork.Activity.GetAsync(id, a => a.Location);
         var activityDto = _mapper.Map<GetActivityDetailDto>(activity);
-        return Ok(activityDto);
+        return Ok(JsonSerializer.Serialize(activityDto));
     }
 
     [HttpPost]

@@ -17,6 +17,7 @@ builder.Services.AddControllers()
     {
         o.JsonSerializerOptions.WriteIndented = true;
         o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        o.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
     });
 
 builder.Services.AddEndpointsApiExplorer(); // https://aka.ms/aspnetcore/swashbuckle
