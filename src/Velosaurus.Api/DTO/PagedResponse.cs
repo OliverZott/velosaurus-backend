@@ -5,10 +5,10 @@ namespace Velosaurus.Api.DTO;
 public class PagedResponse<T>
 {
     [JsonInclude]
-    List<T> Items { get; set; }
+    private List<T> Items { get; set; }
 
     [JsonInclude]
-    PaginationMetadata PaginationMetadata { get; set; }
+    private PaginationMetadata PaginationMetadata { get; set; }
 
     public PagedResponse(List<T> items, PaginationMetadata paginationMetadata)
     {
