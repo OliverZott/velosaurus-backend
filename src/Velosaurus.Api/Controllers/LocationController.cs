@@ -10,15 +10,13 @@ namespace Velosaurus.Api.Controllers;
 [ApiController]
 public class LocationController : ControllerBase
 {
-    private readonly ILogger<LocationController> logger;
-    private readonly IUnitOfWork unitOfWork;
-    private readonly IMapper mapper;
+    private readonly IMapper _mapper;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public LocationController(ILogger<LocationController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+    public LocationController(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        this.logger = logger;
-        this.unitOfWork = unitOfWork;
-        this.mapper = mapper;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
 
@@ -26,17 +24,17 @@ public class LocationController : ControllerBase
     [HttpGet]
     public async Task<IEnumerable<LocationDto>> GetLocationsAsync()
     {
-        var locations = await unitOfWork.Location.GetAllAsync();
-        var locationDtos = mapper.Map<List<GetLocationDto>>(locations).ToList();
+        var locations = await _unitOfWork.Location.GetAllAsync();
+        var locationDtos = _mapper.Map<List<GetLocationDto>>(locations).ToList();
         return locationDtos;
     }
 
     // GET api/<Location>/5
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<GetLocationDetailDto>> GetLocationById(int id)
     {
-        var location = await unitOfWork.Location.GetAsync(id, l => l.Activities);
-        var locationDto = mapper.Map<GetLocationDetailDto>(location);
+        var location = await _unitOfWork.Location.GetAsync(id, l => l.Activities);
+        var locationDto = _mapper.Map<GetLocationDetailDto>(location);
         return Ok(locationDto);
     }
 
@@ -44,8 +42,8 @@ public class LocationController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Location>> PostLocation([FromBody] LocationDto locationDto)
     {
-        var location = mapper.Map<Location>(locationDto);
-        await unitOfWork.Location.AddAsync(location);
+        var location = _mapper.Map<Location>(locationDto);
+        await _unitOfWork.Location.AddAsync(location);
         return CreatedAtAction(nameof(GetLocationById), new { id = location.Id }, location);
     }
 
@@ -55,10 +53,10 @@ public class LocationController : ControllerBase
     {
         if (!ModelState.IsValid || id < 0) return BadRequest(ModelState);
 
-        var location = await unitOfWork.Location.GetAsync(id);
-        mapper.Map(locationDto, location);
+        var location = await _unitOfWork.Location.GetAsync(id);
+        _mapper.Map(locationDto, location);
 
-        await unitOfWork.Location.UpdateAsync(location!);
+        await _unitOfWork.Location.UpdateAsync(location!);
         return NoContent();
     }
 
@@ -66,8 +64,8 @@ public class LocationController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteLocation(int id)
     {
-        await unitOfWork.Location.GetAsync(id);
-        await unitOfWork.Location.DeleteAsync(id);
+        await _unitOfWork.Location.GetAsync(id);
+        await _unitOfWork.Location.DeleteAsync(id);
         return NoContent();
     }
 }

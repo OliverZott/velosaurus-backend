@@ -16,7 +16,7 @@ public class ActivityController : ControllerBase
     private readonly IUnitOfWork _unitOfWork;
 
 
-    public ActivityController(ILogger<ActivityController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+    public ActivityController(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -26,7 +26,7 @@ public class ActivityController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<GetActivityDto>>> GetActivities(int pageNumber = 1, int pageSize = 3)
     {
-        if (pageNumber < 1 || pageSize < 1) return BadRequest("Page number and size must be greaten than 0");
+        if (pageNumber < 1 || pageSize < 1) return BadRequest("Page number and size must be greater than 0");
 
         var (activities, activityCount) = await _unitOfWork.Activity.GetAllPaginatedAsync(pageNumber, pageSize);
         var pageCount = (int)Math.Ceiling(activityCount / (double)pageSize);
@@ -45,7 +45,7 @@ public class ActivityController : ControllerBase
 
         var pagedResponse = new PagedResponse<GetActivityDto>(activityDtos, metadata);
 
-        // TODO remove as soons as global JsonSerializer options work correctly
+        // TODO remove as soon as global JsonSerializer options work correctly
         var options = new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -62,7 +62,7 @@ public class ActivityController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<GetActivityDto>> GetActivityById(int id)
+    public async Task<ActionResult<GetActivityDto>> GetActivityById(int id) 
     {
         var activity = await _unitOfWork.Activity.GetAsync(id, a => a.Location);
         var activityDto = _mapper.Map<GetActivityDetailDto>(activity);

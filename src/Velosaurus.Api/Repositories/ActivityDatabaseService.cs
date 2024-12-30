@@ -2,7 +2,7 @@
 using Velosaurus.DatabaseManager;
 using Velosaurus.DatabaseManager.Models;
 
-namespace Velosaurus.Api.Services;
+namespace Velosaurus.Api.Repositories;
 
 public class ActivityDatabaseService
 {
