@@ -17,7 +17,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     }
 
 
-    public async Task<T> GetAsync(int id, params Expression<Func<T, object>>[] includeProperties)
+    public async Task<T?> GetAsync(int id, params Expression<Func<T, object>>[] includeProperties)
     {
         IQueryable<T> query = _context.Set<T>();
 

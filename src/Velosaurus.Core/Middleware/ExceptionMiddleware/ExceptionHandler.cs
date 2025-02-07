@@ -33,7 +33,10 @@ public class ExceptionHandler : IExceptionHandler
                 title = itemNotFoundException.ExceptionTitle;
                 detail = itemNotFoundException.ExceptionDetail;
                 break;
-            default:
+            case Exception genericException:
+                statusCode = (int)HttpStatusCode.InternalServerError;
+                title = genericException.Message;
+                detail = genericException.Source;
                 break;
         }
 
