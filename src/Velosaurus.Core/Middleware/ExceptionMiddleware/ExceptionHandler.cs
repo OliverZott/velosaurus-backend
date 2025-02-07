@@ -21,9 +21,9 @@ public class ExceptionHandler : IExceptionHandler
 
     private VelosaurusProblemDetails CreateProblemDetails(HttpContext context, Exception exception)
     {
-        var statusCode = (int)HttpStatusCode.InternalServerError;
-        var title = "Internal Server Error";
-        var detail = exception.Message;
+        int statusCode;
+        string? title;
+        string? detail;
         var instance = context.Request.Path;
 
         switch (exception)
@@ -33,10 +33,10 @@ public class ExceptionHandler : IExceptionHandler
                 title = itemNotFoundException.ExceptionTitle;
                 detail = itemNotFoundException.ExceptionDetail;
                 break;
-            case Exception genericException:
+            default:
                 statusCode = (int)HttpStatusCode.InternalServerError;
-                title = genericException.Message;
-                detail = genericException.Source;
+                title = "Internal Server Error";
+                detail = $"Message: {exception.Message}; Source: {exception.Source}";
                 break;
         }
 
