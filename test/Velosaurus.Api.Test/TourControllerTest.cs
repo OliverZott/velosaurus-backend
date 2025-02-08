@@ -15,7 +15,6 @@ public class ActivityControllerTest
         var testController = new TestController();
 
         var result = testController.Hello();
-
-        Assert.That(result, Is.EqualTo("Hello There =)"));
+        Assert.That(result, Is.EqualTo("Hello There =)... \nAPI can be reached at:\n/api/location \n/api/activity \n/swagger/index.html"));
     }
 }
