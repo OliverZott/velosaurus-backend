@@ -28,7 +28,7 @@
 - `dotnet run`
 - Serilog Seq sink: <http://localhost:5341/#/events>
 - App: <https://localhost:7269/swagger/index.html> or <https://localhost:7019/swagger/index.html>
-
+- To seed database: `dotnet ef database update --seed`
 ### docker
 
 - `docker-compose up` or `docker compose up --build`
