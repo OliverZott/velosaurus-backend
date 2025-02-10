@@ -65,6 +65,14 @@ Connect to postgres container:
       - "5434:5432"
   ```
 
+## Environment Variables
+
+Three scenarios with different "environment" variables i.e. connection strings:
+
+1. if run locally: `appsettings.json` connection string is used
+1. if run in docker container: `docker-compose.yml` overwrites connection string
+1. if deployed via pipeline: in `main_velosaurus-api.yml` **GitHub Secrets** are used to set connection string.
+
 ## Database (Postgres)
 
 ### Postgres database updates (Migrations)
