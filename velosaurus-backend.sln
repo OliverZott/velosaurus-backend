@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerfile = Dockerfile
 		Location.postman_collection.json = Location.postman_collection.json
 		.github\workflows\main_velosaurus-api.yml = .github\workflows\main_velosaurus-api.yml
+		.github\workflows\publish-image-dockerhub.yml = .github\workflows\publish-image-dockerhub.yml
 		README.md = README.md
 		velosaurus_architecture.jpg = velosaurus_architecture.jpg
 	EndProjectSection
