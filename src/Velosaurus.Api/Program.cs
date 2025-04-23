@@ -34,7 +34,7 @@ builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Confi
 builder.Services.AddScoped<IGenericRepository<Activity>, GenericRepository<Activity>>();
 builder.Services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-//builder.Services.AddSingleton<ExceptionHandler>();
+builder.Services.AddSingleton<IExceptionHandler, ExceptionHandler>();
 
 // scan all assemblies for classes inheriting from AutoMapper’s Profile class and register them with AutoMapper.
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
