@@ -20,20 +20,22 @@
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: velosaurus-api
     depends_on:
       - velosaurusdb
     ports:
-      - "8000:8080"
+      - "8000:6789"  # 8000 is the port on host machine, 6789 is the port inside container
     environment:
+      - ASPNETCORE_URLS=http://+:6789  # default asp.net core port is 8080 (since net8), other ports has to be specified here 
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__ActivityDbConnectionString=Host=velosaurusdb; Database=velosaurus; Port=5432; User Id=postgres; Password=password
       - Serilog:WriteTo:0:Args:pathFormat=/logs/log-{Date}.txt
-    container_name: velosaurus-api
-  
+    
   
   # PgAdmin
   pgadmin:
     image: dpage/pgadmin4
+    container_name: velosaurus-pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@mail.com
       PGADMIN_DEFAULT_PASSWORD: password
@@ -46,7 +48,7 @@
       - pgadmin-vol:/var/lib/pgadmin
     links:
       - velosaurusdb
-    container_name: velosaurus-pgadmin
+    
 
 
 volumes:
