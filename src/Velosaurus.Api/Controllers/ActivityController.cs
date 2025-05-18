@@ -37,7 +37,6 @@ public class ActivityController(IUnitOfWork unitOfWork, IMapper mapper) : Contro
     [HttpGet("{id:int}")]
     public async Task<ActionResult<GetActivityDto>> GetActivityById(int id) 
     {
-        // TODO - debug inside and change a to null and see what happens (null reference exception)
         var activity = await unitOfWork.Activity.GetAsync(id, a => a.Location);
         var activityDto = mapper.Map<GetActivityDetailDto>(activity);
         return Ok(activityDto);
