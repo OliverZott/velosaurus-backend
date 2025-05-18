@@ -9,6 +9,7 @@ public class ExceptionMiddleware
     private readonly ILogger<ExceptionMiddleware> _logger;
     private readonly IExceptionHandler _exceptionHandler;
 
+    // Default ExceptionHandler, if not registered in IoC container (program.cs), which it is :)
     public ExceptionMiddleware(RequestDelegate requestDelegate, ILogger<ExceptionMiddleware> logger) : this(requestDelegate, logger, new ExceptionHandler()) { }
 
     public ExceptionMiddleware(RequestDelegate requestDelegate, ILogger<ExceptionMiddleware> logger, IExceptionHandler exceptionHandler)
