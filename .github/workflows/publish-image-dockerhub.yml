@@ -14,7 +14,7 @@ on:
 
 jobs:
   push_to_registry:
-    name: Push Docker image to Docker Hub
+    name: Build docker image and push to DockerHub
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -32,3 +32,6 @@ jobs:
           context: .
           push: true
           tags: dasmuesli/velosaurus-backend:latest
+
+      - name: Docker Hub link
+        run: echo "Docker image published to https://hub.docker.com/repository/docker/dasmuesli/velosaurus-backend"
