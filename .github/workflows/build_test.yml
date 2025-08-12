@@ -1,0 +1,36 @@
+name: Build and run unit tests
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths-ignore:
+      - "README.md"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ["9.x.x"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # =====================================================================================================
+      # build and run unit tests
+
+      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Unit tests
+        run: dotnet test --no-restore --verbosity normal
