@@ -3,40 +3,37 @@
 
 name: Build, UnitTest, Docker-check
 
-on:
-  push:
-    branches:
-      - main
-      - "*"
-    paths-ignore:
-      - 'README.md'
-  workflow_dispatch:  # for running manually in GitHub/actions view
+# on:
+#   push:
+#     branches:
+#       - main
+#       - "*"
+#     paths-ignore:
+#       - 'README.md'
+#   workflow_dispatch:  # for running manually in GitHub/actions view
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: [ '9.x.x' ]
+        dotnet-version: ["9.x.x"]
 
     steps:
       - uses: actions/checkout@v4
-      
 
-    # =====================================================================================================
-    # substitute env vars and secrets
+      # =====================================================================================================
+      # substitute env vars and secrets
 
-      #- uses: microsoft/variable-substitution@v1 
+      #- uses: microsoft/variable-substitution@v1
       #  with:
       #      files: '**/appsettings.json'
       #  env:
       #      TourDatabase.DbConnectionString: ${{ secrets.DBCONNECTIONSTRING }}
       #      App.ServerRootAddress: ${{ env.SERVER_ROOT_ADDRESS }}
 
-
-
-    # =====================================================================================================
-    # build and run unit tests
+      # =====================================================================================================
+      # build and run unit tests
 
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v4
@@ -51,10 +48,9 @@ jobs:
 
       - name: Unit tests
         run: dotnet test --no-restore --verbosity normal
-  
 
-    # =====================================================================================================
-    # Test docker compose file
+      # =====================================================================================================
+      # Test docker compose file
 
       # Install Docker Compose
       - name: Set up Docker Compose
@@ -74,22 +70,17 @@ jobs:
       - name: Stop Containers
         run: docker-compose -f docker-compose.yml down
 
-
-
-
     # =====================================================================================================
     # publish and upload artifact
 
-       # - name: dotnet publish
-       #   run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
-         
-       # - name: Upload artifact for deployment job
-       #   uses: actions/upload-artifact@v2
-       #   with:
-       #     name: .net-app
-       #     path: ${{env.DOTNET_ROOT}}/myapp
+    # - name: dotnet publish
+    #   run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
-
+    # - name: Upload artifact for deployment job
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: .net-app
+    #     path: ${{env.DOTNET_ROOT}}/myapp
 
     # =====================================================================================================
     # deploy:
