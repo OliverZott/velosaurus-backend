@@ -1,0 +1,375 @@
+{
+	"info": {
+		"_postman_id": "938fa7ca-2a00-42bf-b548-9636a501212c",
+		"name": "Test Activity Endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12222368"
+	},
+	"item": [
+		{
+			"name": "activity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validate that the response code should be 200\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    \r",
+							"    let activity = pm.response.json();\r",
+							"    console.log(activity);\r",
+							"});\r",
+							"\r",
+							"// Validate that the response is json object\r",
+							"pm.test(\"Response is a json object\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"// Validate that the response has id property\r",
+							"pm.test(\"Response to have 'id' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('id');\r",
+							"    let activityId = pm.response.json().id;\r",
+							"    pm.environment.set(\"activityId\", activityId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"NAME\": \"{{ActivityName}}\",\r\n  \"LENGTH\": 25.8,\r\n  \"ALTITUDEGAIN\": 875,\r\n  \"ACTIVITYTYPE\": 2,\r\n  \"LOCATIONID\": 2,\r\n  \"DESCRIPTION\": \"Test description\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Activity",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Activity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activity, check if created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).not.eql('');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Activity/{{activityId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Activity",
+						"{{activityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activities, check if created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the JSON response\r",
+							"let responseData = pm.response.json().Items;\r",
+							"\r",
+							"// Check if the response is an array\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    pm.expect(responseData).to.be.an('array');\r",
+							"});\r",
+							"\r",
+							"// Check if the array is not empty\r",
+							"pm.test(\"Array is not empty\", function () {\r",
+							"    pm.expect(responseData.length).to.be.above(0);\r",
+							"});\r",
+							"\r",
+							"// Check if the first item has an ID property\r",
+							"pm.test(\"First item has an ID property\", function () {\r",
+							"    pm.expect(responseData[0]).to.have.property('Id');\r",
+							"});\r",
+							"\r",
+							"// Set the latest ID as an environment variable\r",
+							"pm.test(\"First item ID is 14\", function () {\r",
+							"    pm.expect(responseData[0].Id).to.equal(pm.variables.get(\"activityId\"));\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Activity?pageNumber=1&pageSize=10",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Activity"
+					],
+					"query": [
+						{
+							"key": "pageNumber",
+							"value": "1"
+						},
+						{
+							"key": "pageSize",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activity by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"NAME\": \"{{UpdatedActivityName}}\",\r\n  \"LENGTH\": 25.8,\r\n  \"ALTITUDEGAIN\": 875,\r\n  \"ACTIVITYTYPE\": 2,\r\n  \"LOCATIONID\": 2,\r\n  \"DESCRIPTION\": \"Test description\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Activity/{{activityId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Activity",
+						"{{activityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activity, check if updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).not.eql('');\r",
+							"});\r",
+							"\r",
+							"// Check if the response body has the UpdatedActivityName\r",
+							"pm.test(\"Check if the response body has the UpdatedActivityName\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.have.property(\"name\", pm.variables.get(\"UpdatedActivityName\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Activity/{{activityId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Activity",
+						"{{activityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activity by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Activity/{{activityId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Activity",
+						"{{activityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "activity, check if deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Check if the response body has the UpdatedActivityName\r",
+							"pm.test(\"Check if the response body has the UpdatedActivityName\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.have.property(\"title\", \"Item Not Found.\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Activity/{{activityId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Activity",
+						"{{activityId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "QTUzMzdDMjEtQjY5OS05OTZCLUE5Qjg0OTZBMzJDRDBBNjQ=",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "apiKey",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ActivityName",
+			"value": "Test Location Name",
+			"type": "default",
+			"disabled": true
+		}
+	]
+}

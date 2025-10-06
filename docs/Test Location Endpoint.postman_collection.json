@@ -1,0 +1,222 @@
+{
+	"info": {
+		"_postman_id": "196019f9-2f48-43e3-bb27-f13692a27631",
+		"name": "Test Location Endpoint",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12222368"
+	},
+	"item": [
+		{
+			"name": "location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Validate that the response code should be 200\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    \r",
+							"    let location = pm.response.json();\r",
+							"    console.log(location);\r",
+							"});\r",
+							"\r",
+							"// Validate that the response is json object\r",
+							"pm.test(\"Response is a json object\", function () {\r",
+							"    pm.expect(pm.response.json()).to.be.an('object');\r",
+							"});\r",
+							"\r",
+							"// Validate that the response has id property\r",
+							"pm.test(\"Response to have 'id' property\", function () {\r",
+							"    pm.expect(pm.response.json()).to.have.property('id');\r",
+							"    let locationId = pm.response.json().id;\r",
+							"    pm.environment.set(\"locationId\", locationId);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{LocationName}}\",\r\n  \"region\": \"Test Region\"\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Location",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Location"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "locations, check if created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body is not empty\", function () {\r",
+							"    pm.expect(pm.response.text()).not.eql('');\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Location/{{locationId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Location",
+						"{{locationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "location by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"{{UpdatedLocationName}}\",\r\n  \"region\": \"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/Location/{{locationId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Location",
+						"{{locationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Location/{{locationId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Location",
+						"{{locationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "locations, check if deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"// Check if the response body has the UpdatedActivityName\r",
+							"pm.test(\"Check if the response body has the UpdatedActivityName\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.have.property(\"title\", \"Item Not Found.\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Location/{{locationId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Location",
+						"{{locationId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
