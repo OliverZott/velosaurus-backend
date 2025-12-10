@@ -1,0 +1,33 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".dockerignore" />
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="CheckAndStartServices.ps1" />
+    <File Path="docker-compose.yml" />
+    <File Path="Dockerfile" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Solution Items/data/">
+    <File Path="data/DatabaseSeeding.sql" />
+  </Folder>
+  <Folder Name="/Solution Items/docs/">
+    <File Path="docs/Activity.postman_collection.json" />
+    <File Path="docs/docker.postman_environment.json" />
+    <File Path="docs/localhost-nodejs.postman_environment.json" />
+    <File Path="docs/localhost.postman_environment.json" />
+    <File Path="docs/Location.postman_collection.json" />
+    <File Path="docs/Test Activity Endpoint.postman_collection.json" />
+    <File Path="docs/Test Location Endpoint.postman_collection.json" />
+  </Folder>
+  <Folder Name="/Solution Items/pipelines/">
+    <File Path=".github/workflows/build_test.yml" />
+    <File Path=".github/workflows/build_test_docker.yml" />
+    <File Path=".github/workflows/main_velosaurus-api.yml" />
+    <File Path=".github/workflows/publish-image.yml" />
+  </Folder>
+  <Project Path="src/Velosaurus.Api/Velosaurus.Api.csproj" />
+  <Project Path="src/Velosaurus.Core/Velosaurus.Core.csproj" />
+  <Project Path="src/Velosaurus.DatabaseManager/Velosaurus.DatabaseManager.csproj" />
+  <Project Path="test/Velosaurus.Api.Test/Velosaurus.Api.Test.csproj" />
+</Solution>
