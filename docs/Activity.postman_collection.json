@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "aeba2031-3afa-492b-aa22-a134ba68ec53",
+		"_postman_id": "f3925ebc-2bef-4768-b569-1a99f9dca782",
 		"name": "Activity",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "12222368"
+		"_exporter_id": "39031891"
 	},
 	"item": [
 		{
@@ -137,13 +137,72 @@
 			]
 		},
 		{
+			"name": "activities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/Activity",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"Activity"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "activity by id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/Activity",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"Activity"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 19 Nov 2024 15:03:21 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"AAT\",\n        \"date\": \"2024-11-19T09:15:33.209Z\",\n        \"length\": 19.2,\n        \"altitudeGain\": 547,\n        \"activityType\": 0,\n        \"locationId\": 0\n    }\n]"
+				}
+			]
+		},
+		{
 			"name": "activity",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"teeeest\",\r\n  \"date\": \"2025-08-05T09:15:33.209Z\",\r\n  \"length\": 13.9,\r\n  \"altitudeGain\": 241,\r\n  \"activityType\": 1,\r\n  \"description\": \"Just a test\",\r\n  \"locationId\": 1\r\n}",
+					"raw": "{\r\n  \"name\": \"Arzler Alm\",\r\n  \"date\": \"2024-09-19T09:15:33.209Z\",\r\n  \"length\": 19.2,\r\n  \"altitudeGain\": 547,\r\n  \"activityType\": 0,\r\n  \"description\": \"Nice autumn mtb ride to Arzler Alm\",\r\n  \"locationId\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

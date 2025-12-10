@@ -7,17 +7,17 @@
 - Hosting: [**Heroku**](https://dashboard.heroku.com/) amd [**Azure**](https://portal.azure.com/)
 - DevOps: [**Azure DevOps**](https://dev.azure.com/)
 
-![Project Structure](velosaurus_architecture.jpg)
+![Project Structure](./docs/velosaurus_architecture.jpg)
 
 ## Prerequisites
 
-- .NET 9 SDK  
+- .NET 10 SDK  
   - [windows](https://dotnet.microsoft.com/en-us/download)
   - [linux](#install-net-on-linux)
 - Postgres
 - Docker (if run containerized)
-- Seq (optional - Serilog Sink 
-  - https://datalust.co/download)
+- Seq (optional - Serilog Sink
+  - <https://datalust.co/download>)
   - `seq service status`
   - `seq service start`
   - `seq config get -k api.listenUris`
@@ -31,10 +31,11 @@
 - Serilog Seq sink: <http://localhost:5341/#/events>
 - App: <https://localhost:7269/swagger/index.html> or <https://localhost:7019/swagger/index.html>
 - To seed database: `dotnet ef database update --seed`
+
 ### docker
 
 - `docker-compose up` or `docker compose up --build`
-- App: 
+- App:
   - <http://localhost:8000/swagger/index.html>
   - <http://localhost:8000/api/Activity/1>
 - PGAdmin: <http://localhost:8002/browser/>
@@ -49,6 +50,7 @@
 - `docker compose down -v`  
 
 Connect to postgres container:
+
 - `docker container exec -it xxxxxxxxxx bash`
 - `psql -U postgres`
 - `\l`
@@ -116,7 +118,6 @@ SELECT * from "Activities";
 
 - location properties: name, summit, mountain range, subgroup
   - e.g. Mutters, Saile, Stubai Alps, Kalkkögel
-
 
 - Environments Dev / Prod(Demo)
 - UnitTests
