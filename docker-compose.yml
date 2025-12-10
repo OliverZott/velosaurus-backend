@@ -1,7 +1,7 @@
 ﻿services:
   # Database
   velosaurusdb:
-    image: postgres
+    image: postgres:latest
     restart: always
     container_name: velosaurus-db
     environment:
@@ -11,7 +11,7 @@
     ports:
       - "5433:5432" # only exposing to port 5433 on host, api service still listens to internal 5432 port
     volumes:
-      - velosaurus-data:/var/lib/postgresql/data
+      - velosaurus-data:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
       interval: 30s

@@ -38,6 +38,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{F2CB4801-6
 		data\DatabaseSeeding.sql = data\DatabaseSeeding.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pipelines", "pipelines", "{7138EFE8-9456-4395-83F5-6C9BE9177C1E}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build_test.yml = .github\workflows\build_test.yml
+		.github\workflows\build_test_docker.yml = .github\workflows\build_test_docker.yml
+		.github\workflows\main_velosaurus-api.yml = .github\workflows\main_velosaurus-api.yml
+		.github\workflows\publish-image.yml = .github\workflows\publish-image.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +75,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{691406FF-8747-4863-BC85-D27074D13029} = {410E43E6-C152-4671-BB6E-41521E7DC8B5}
 		{F2CB4801-6A85-40AE-996D-662EE2E4FE7C} = {410E43E6-C152-4671-BB6E-41521E7DC8B5}
+		{7138EFE8-9456-4395-83F5-6C9BE9177C1E} = {410E43E6-C152-4671-BB6E-41521E7DC8B5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AA5C0325-5C55-4F99-8D50-BFC0C5ADCEFA}
