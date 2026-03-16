@@ -26,7 +26,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return entity ?? throw new ItemNotFoundException($"{typeof(T)}", id);
     }
 
-    public async Task<(List<T>, int activitiesCount)> GetAllPaginatedAsync(int pageNumber, int pageSize)
+    public async Task<(IList<T>, int activitiesCount)> GetAllPaginatedAsync(int pageNumber, int pageSize)
     {
         var activitiesCount = await _context.Set<T>().CountAsync();
 
@@ -45,7 +45,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return entity;
     }
 
-    public async Task<List<T>> GetAllAsync()
+    public async Task<IList<T>> GetAllAsync()
     {
         return await _context.Set<T>().OrderByDescending(a => a.Id).ToListAsync();
     }

@@ -11,9 +11,9 @@ public class ExceptionHandler : IExceptionHandler
     public Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         context.Response.ContentType = "application/json";
-        var problemDetails = CreateProblemDetails(context, exception);
+        VelosaurusProblemDetails problemDetails = CreateProblemDetails(context, exception);
 
-        var response = JsonSerializer.Serialize(problemDetails);
+        string response = JsonSerializer.Serialize(problemDetails);
         context.Response.StatusCode = (int)problemDetails.Status!;
         return context.Response.WriteAsync(response);
     }
@@ -24,7 +24,7 @@ public class ExceptionHandler : IExceptionHandler
         int statusCode;
         string? title;
         string? detail;
-        var instance = context.Request.Path;
+        PathString instance = context.Request.Path;
 
         switch (exception)
         {
