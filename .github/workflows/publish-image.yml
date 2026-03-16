@@ -29,4 +29,4 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/velosaurus-backend:latest
 
       - name: Show Docker Hub link
-        run: echo "Docker image published to https://hub.docker.com/r/${{ secrets.DOCKER_HUB_USERNAME }}/velosaurus-backend"
+        run: echo "Docker image published to https://hub.docker.com/r/dasmuesli/velosaurus-backend"
