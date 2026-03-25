@@ -15,7 +15,7 @@ public class LocationController(IUnitOfWork unitOfWork, IMapper mapper) : Contro
     public async Task<ActionResult<IEnumerable<LocationDto>>> GetLocationsAsync()
     {
         var locations = await unitOfWork.Location.GetAllAsync();
-        var locationDtos = mapper.Map<List<GetLocationDto>>(locations).ToList();
+        var locationDtos = mapper.Map<IList<GetLocationDto>>(locations).ToList();
         return Ok(locationDtos);
     }
 
