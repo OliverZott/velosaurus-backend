@@ -1,21 +1,21 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Velosaurus.Api.DTO;
 using Velosaurus.Api.Repositories;
 using Velosaurus.DatabaseManager.Models;
+using Velosaurus.Api.Utils;
 
 namespace Velosaurus.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class LocationController(IUnitOfWork unitOfWork, IMapper mapper) : ControllerBase
+public class LocationController(IUnitOfWork unitOfWork) : ControllerBase
 {
     // GET: api/<Location>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<LocationDto>>> GetLocationsAsync()
     {
         var locations = await unitOfWork.Location.GetAllAsync();
-        var locationDtos = mapper.Map<IList<GetLocationDto>>(locations).ToList();
+        var locationDtos = locations.Select(l => l.ToGetLocationDto()).ToList();
         return Ok(locationDtos);
     }
 
@@ -24,7 +24,7 @@ public class LocationController(IUnitOfWork unitOfWork, IMapper mapper) : Contro
     public async Task<ActionResult<GetLocationDetailDto>> GetLocationById(int id)
     {
         var location = await unitOfWork.Location.GetAsync(id, l => l.Activities);
-        var locationDto = mapper.Map<GetLocationDetailDto>(location);
+        var locationDto = location.ToGetLocationDetailDto();
         return Ok(locationDto);
     }
 
@@ -32,7 +32,7 @@ public class LocationController(IUnitOfWork unitOfWork, IMapper mapper) : Contro
     [HttpPost]
     public async Task<ActionResult<Location>> PostLocation([FromBody] LocationDto locationDto)
     {
-        var location = mapper.Map<Location>(locationDto);
+        var location = locationDto.ToLocation();
         await unitOfWork.Location.AddAsync(location);
         return CreatedAtAction(nameof(GetLocationById), new { id = location.Id }, location);
     }
@@ -44,7 +44,7 @@ public class LocationController(IUnitOfWork unitOfWork, IMapper mapper) : Contro
         if (!ModelState.IsValid || id < 0) return BadRequest(ModelState);
 
         var location = await unitOfWork.Location.GetAsync(id);
-        mapper.Map(locationDto, location);
+        location.UpdateFrom(locationDto);
 
         await unitOfWork.Location.UpdateAsync(location!);
         return NoContent();

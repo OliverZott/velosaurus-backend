@@ -36,8 +36,6 @@ builder.Services.AddScoped<IGenericRepository<Location>, GenericRepository<Locat
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<IExceptionHandler, ExceptionHandler>();
 
-// scan all assemblies for classes inheriting from AutoMapper’s Profile class and register them with AutoMapper.
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
