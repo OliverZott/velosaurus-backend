@@ -6,9 +6,7 @@ using Velosaurus.Api.Utils;
 
 namespace Velosaurus.Api.Controllers;
 
-[ApiController]
-[Route("api/[controller]")]
-public class ActivityController(IUnitOfWork unitOfWork) : ControllerBase
+public class ActivityController(IUnitOfWork unitOfWork) : BaseApiController
 {
     [HttpGet]
     public async Task<ActionResult<List<GetActivityDto>>> GetActivities(int pageNumber = 1, int pageSize = 3)

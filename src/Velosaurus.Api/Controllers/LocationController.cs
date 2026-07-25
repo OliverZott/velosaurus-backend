@@ -6,9 +6,7 @@ using Velosaurus.Api.Utils;
 
 namespace Velosaurus.Api.Controllers;
 
-[Route("api/[controller]")]
-[ApiController]
-public class LocationController(IUnitOfWork unitOfWork) : ControllerBase
+public class LocationController(IUnitOfWork unitOfWork) : BaseApiController
 {
     // GET: api/<Location>
     [HttpGet]
