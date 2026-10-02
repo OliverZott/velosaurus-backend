@@ -30,7 +30,7 @@
 - `dotnet run`
 - Serilog Seq sink: <http://localhost:5341/#/events>
 - App: <https://localhost:7269/swagger/index.html> or <https://localhost:7019/swagger/index.html>
-- To seed database: `dotnet ef database update --seed`
+- Demo data: see docker section (`data/init.sql`)
 
 ### docker
 
@@ -39,7 +39,10 @@ Published images ([Docker Hub](https://hub.docker.com/r/dasmuesli/velosaurus-bac
 
 - `docker compose up -d --build` (rebuild after code changes)
   - builds `velosaurus-backend:local`, the published image stays untouched
-- containers `velosaurus-backend-db-1` and `velosaurus-backend-api-1` (project `velosaurus-backend`, separate from the deployment repo)
+- containers `velosaurus-dev-db-1` and `velosaurus-dev-api-1`, volume `velosaurus-dev_db-data` (project `velosaurus-dev`, separate from the deployment repo)
+- demo data: `data/init.sql` (pg_dump) is loaded by postgres on first start with an empty volume
+  - update it: change data in the dev db, then `docker compose exec db pg_dump -U postgres -d velosaurus --clean --if-exists --no-owner --no-privileges > data/init.sql`
+  - reset to demo data: `docker compose down -v`, then `up`
 - App:
   - <http://localhost:8000/swagger/index.html>
   - <http://localhost:8000/health>

@@ -1,7 +1,7 @@
 # Local development stack: database + rest api
-# containers: velosaurus-backend-db-1, velosaurus-backend-api-1 (own project name, separate from velosaurus-deployment)
+# containers: velosaurus-dev-db-1, velosaurus-dev-api-1, volume velosaurus-dev_db-data (separate from velosaurus-deployment)
 # api: http://localhost:8000/swagger, db: localhost:5433 (change with API_PORT / DB_PORT)
-name: velosaurus-backend
+name: velosaurus-dev
 
 services:
   # Database
@@ -16,8 +16,11 @@ services:
       - "${DB_PORT:-5433}:5432" # host port, containers use db:5432
     volumes:
       - db-data:/var/lib/postgresql
+      # demo data: data/init.sql (pg_dump incl. tables + EF migration history), only runs on an empty volume
+      - ./data:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d velosaurus"]
+      # -h 127.0.0.1: check over TCP, so the temporary server that loads init.sql doesn't count as ready
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres -d velosaurus"]
       interval: 5s
       timeout: 5s
       retries: 10

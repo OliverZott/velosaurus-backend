@@ -9,7 +9,7 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/Solution Items/data/">
-    <File Path="data/DatabaseSeeding.sql" />
+    <File Path="data/init.sql" />
   </Folder>
   <Folder Name="/Solution Items/docs/">
     <File Path="docs/Activity.postman_collection.json" />
