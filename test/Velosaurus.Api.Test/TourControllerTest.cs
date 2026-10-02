@@ -10,11 +10,16 @@ public class ActivityControllerTest
     }
 
     [Test]
-    public void Hello_AllWorking_ReturnsHelloString()
+    public void Hello_AllWorking_ReturnsHelloHtml()
     {
         var testController = new TestController();
 
         var result = testController.Hello();
-        Assert.That(result, Is.EqualTo("Hello There =)... \nAPI can be reached at:\n/api/location \n/api/activity \n/swagger/index.html"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.ContentType, Is.EqualTo("text/html"));
+            Assert.That(result.Content, Does.Contain("Hello There"));
+            Assert.That(result.Content, Does.Contain("/api/v1/activity"));
+        });
     }
 }
