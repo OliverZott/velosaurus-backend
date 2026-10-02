@@ -1,0 +1,10 @@
+# Override: build api from local Dockerfile instead of using the published image
+# Only works ON TOP of docker-compose.yml (db, ports, env are defined there), never use it alone:
+# docker compose -f docker-compose.yml -f docker-compose.local.yml up --build
+services:
+  velosaurus-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: velosaurus-api:local # own tag, so it never overwrites the published image
+    pull_policy: build

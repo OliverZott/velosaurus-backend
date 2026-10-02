@@ -13,20 +13,20 @@
     volumes:
       - velosaurus-data:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
-      interval: 30s
-      timeout: 60s
-      retries: 5
+      test: ["CMD-SHELL", "pg_isready -U postgres -d velosaurus"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   # REST API
   velosaurus-api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: velosaurus-api
+    # published image: https://hub.docker.com/r/dasmuesli/velosaurus-backend
+    # to build from local Dockerfile instead, see docker-compose.local.yml
+    image: dasmuesli/velosaurus-backend:latest
     container_name: velosaurus-api
     depends_on:
-      - velosaurusdb
+      velosaurusdb:
+        condition: service_healthy
     ports:
       - "8000:6789" # 8000 is the port on host machine, 6789 is the port inside container
     environment:

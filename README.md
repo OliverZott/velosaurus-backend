@@ -34,7 +34,10 @@
 
 ### docker
 
-- `docker-compose up` or `docker compose up --build`
+- use published image ([Docker Hub](https://hub.docker.com/r/dasmuesli/velosaurus-backend)): `docker compose up`
+  - get newest published version: `docker compose pull`
+- use local Dockerfile: `docker compose -f docker-compose.yml -f docker-compose.local.yml up --build`
+  - builds `velosaurus-api:local`, the published image stays untouched
 - App:
   - <http://localhost:8000/swagger/index.html>
   - <http://localhost:8000/api/Activity/1>
