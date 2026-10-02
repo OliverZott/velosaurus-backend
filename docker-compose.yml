@@ -1,7 +1,7 @@
 ﻿services:
   # Database
   velosaurusdb:
-    image: postgres:latest
+    image: postgres:18
     restart: always
     container_name: velosaurus-db
     environment:

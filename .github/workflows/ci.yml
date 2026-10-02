@@ -23,8 +23,6 @@ permissions:
 
 env:
   IMAGE: dasmuesli/velosaurus-backend
-  # docker check uses local Dockerfile (the commit under test), not the published image
-  COMPOSE_FILE: docker-compose.yml:docker-compose.local.yml
 
 jobs:
   # =====================================================================================================
@@ -59,22 +57,23 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # docker-compose.local.yml: build api from this commit, not the published image
       - name: Validate compose file
-        run: docker compose config --quiet
+        run: docker compose -f docker-compose.yml -f docker-compose.local.yml config --quiet
 
       - name: Build and start stack
-        run: docker compose up --detach --build --wait
+        run: docker compose -f docker-compose.yml -f docker-compose.local.yml up --detach --build --wait
 
       - name: Smoke test api (health endpoint checks db connection)
         run: curl --fail --silent --show-error --retry 10 --retry-delay 3 --retry-all-errors http://localhost:8000/health
 
       - name: Show container logs
         if: failure()
-        run: docker compose logs
+        run: docker compose -f docker-compose.yml -f docker-compose.local.yml logs
 
       - name: Stop stack
         if: always()
-        run: docker compose down --volumes
+        run: docker compose -f docker-compose.yml -f docker-compose.local.yml down --volumes
 
   # =====================================================================================================
   # build and push image to Docker Hub (main only, after test + docker passed)
