@@ -1,17 +1,21 @@
-﻿services:
+# Local development stack: database + rest api
+# containers: velosaurus-backend-db-1, velosaurus-backend-api-1 (own project name, separate from velosaurus-deployment)
+# api: http://localhost:8000/swagger, db: localhost:5433 (change with API_PORT / DB_PORT)
+name: velosaurus-backend
+
+services:
   # Database
-  velosaurusdb:
+  db:
     image: postgres:18
-    restart: always
-    container_name: velosaurus-db
+    restart: unless-stopped
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=velosaurus
     ports:
-      - "5433:5432" # only exposing to port 5433 on host, api service still listens to internal 5432 port
+      - "${DB_PORT:-5433}:5432" # host port, containers use db:5432
     volumes:
-      - velosaurus-data:/var/lib/postgresql
+      - db-data:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d velosaurus"]
       interval: 5s
@@ -19,21 +23,23 @@
       retries: 10
 
   # REST API
-  velosaurus-api:
-    # published image: https://hub.docker.com/r/dasmuesli/velosaurus-backend
-    # to build from local Dockerfile instead, see docker-compose.local.yml
-    image: dasmuesli/velosaurus-backend:latest
-    container_name: velosaurus-api
+  api:
+    # always built from local code (published images are used in velosaurus-deployment)
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: velosaurus-backend:local # own tag, never overwrites the published image
+    pull_policy: build
+    restart: unless-stopped
     depends_on:
-      velosaurusdb:
+      db:
         condition: service_healthy
     ports:
-      - "8000:6789" # 8000 is the port on host machine, 6789 is the port inside container
+      - "${API_PORT:-8000}:6789" # host port, 6789 inside container
     environment:
       - ASPNETCORE_URLS=http://+:6789 # default asp.net core port is 8080 (since net8), other ports has to be specified here
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__ActivityDbConnectionString=Host=velosaurusdb; Database=velosaurus; Port=5432; User Id=postgres; Password=password
-      - Serilog:WriteTo:0:Args:pathFormat=/logs/log-{Date}.txt
+      - ConnectionStrings__ActivityDbConnectionString=Host=db; Database=velosaurus; Port=5432; User Id=postgres; Password=password
 
 volumes:
-  velosaurus-data:
+  db-data:

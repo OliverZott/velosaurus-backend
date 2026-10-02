@@ -455,3 +455,6 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# local docker compose settings (e.g. DB_PORT, API_PORT)
+.env

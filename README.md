@@ -34,43 +34,35 @@
 
 ### docker
 
-- use published image ([Docker Hub](https://hub.docker.com/r/dasmuesli/velosaurus-backend)): `docker compose up`
-  - get newest published version: `docker compose pull`
-- use local Dockerfile: `docker compose -f docker-compose.yml -f docker-compose.local.yml up --build`
-  - builds `velosaurus-api:local`, the published image stays untouched
+Local development only: builds the api from your local code.
+Published images ([Docker Hub](https://hub.docker.com/r/dasmuesli/velosaurus-backend)) are used in the velosaurus-deployment repo.
+
+- `docker compose up -d --build` (rebuild after code changes)
+  - builds `velosaurus-backend:local`, the published image stays untouched
+- containers `velosaurus-backend-db-1` and `velosaurus-backend-api-1` (project `velosaurus-backend`, separate from the deployment repo)
 - App:
   - <http://localhost:8000/swagger/index.html>
-  - <http://localhost:8000/api/Activity/1>
-- PGAdmin: <http://localhost:8002/browser/>
-  - to get Host name/address: `docker inspect <database> | grep IPAddress`
-  - name: velosaurus
-  - host: name / address: IPAddress
-  - Port: 5432
-  - username: postgres  (as defined in docker-compose.yml)
-  - password: password  (as defined in docker-compose.yml)
+  - <http://localhost:8000/health>
+  - <http://localhost:8000/api/v1/activity>
+- Frontend dev against this stack: `npm run dev` in velosaurus-frontend with `.env.local`
+  - `ACTIVITY_API_URL=http://localhost:8000/api/v1/activity`
+  - `LOCATION_API_URL=http://localhost:8000/api/v1/location`
+- PGAdmin / other db tools: host `localhost`, port `5433`, user `postgres`, password `password` (see docker-compose.yml)
 - Serilog Seq sink: <http://localhost:5341/#/events>  (optional, has to be installed)
   - TODO: seq in container ???
-- `docker compose down -v`  
+- `docker compose down` (keeps data), `docker compose down -v` (also deletes database)
 
 Connect to postgres container:
 
-- `docker container exec -it xxxxxxxxxx bash`
-- `psql -U postgres`
-- `\l`
-- `\c velosaurus`
+- `docker compose exec db psql -U postgres -d velosaurus`
 - `\dt`
-- `select * from "Tours";`
+- `select * from "Activities";`
 
 ### Issues
 
-- Linux postgres port problems: check port usage `sudo lsof -i :5434` and `sudo kill -9 <PID>`
-  - adapt docker-compose.yml:
-
-  ```yml
-  velosaurusdb:
-    ports:
-      - "5434:5432"
-  ```
+- Port already in use (e.g. other postgres on 5433): choose other host ports, e.g. `$env:DB_PORT=5434; docker compose up -d`
+  - or put `DB_PORT=5434` / `API_PORT=8001` into a `.env` file next to docker-compose.yml
+  - Linux: check port usage `sudo lsof -i :5433`
 
 ## Environment Variables
 
@@ -89,7 +81,7 @@ Three scenarios with different "environment" variables i.e. connection strings:
 
 ### psql in docker container
 
-- `docker exec -it velosaurus-db psql -U postgres`
+- `docker compose exec db psql -U postgres -d velosaurus`
 
 ### Postgres commands
 
