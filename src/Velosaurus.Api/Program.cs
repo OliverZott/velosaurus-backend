@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Velosaurus.Api.Repositories;
 using Velosaurus.Core.Middleware.ExceptionMiddleware;
 using Velosaurus.DatabaseManager;
@@ -18,6 +19,8 @@ builder.Services.AddControllers()
         o.JsonSerializerOptions.WriteIndented = true;
         o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
         o.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+        // enums as names ("Bike") instead of numbers (0), in responses and in swagger
+        o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
 builder.Services.AddEndpointsApiExplorer(); // https://aka.ms/aspnetcore/swashbuckle
