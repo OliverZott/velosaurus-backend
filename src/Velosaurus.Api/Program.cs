@@ -36,6 +36,9 @@ builder.Services.AddScoped<IGenericRepository<Location>, GenericRepository<Locat
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<IExceptionHandler, ExceptionHandler>();
 
+// /health returns 200 "Healthy" or 503 "Unhealthy" if database is not reachable
+builder.Services.AddHealthChecks().AddDbContextCheck<VelosaurusDbContext>();
+
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -55,4 +58,5 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseCors("MyAllowAllPolicy");
 app.MapControllers();
+app.MapHealthChecks("/health");
 app.Run();
