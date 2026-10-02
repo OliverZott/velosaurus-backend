@@ -7,14 +7,21 @@ namespace Velosaurus.Api.Controllers;
 public class TestController : ControllerBase
 {
     [HttpGet]
-    public string Hello()
+    public ContentResult Hello()
     {
-        // TODO remove exception handler test
-        // throw new Exception("Test Exception");
-        return "Hello There =)... \n" +
-               "API can be reached at:\n" +
-               "/api/location \n" +
-               "/api/activity \n" +
-               "/swagger/index.html";
+        var html = @"
+        <html>
+            <body style='font-family: sans-serif;'>
+                <p>Hello There :)</p>
+                <p>API can be reached at:</p>
+                <ul>
+                    <li><a href='http://localhost:8000/api/v1/location' target='_blank'>Location API</a></li>
+                    <li><a href='http://localhost:8000/api/v1/activity' target='_blank'>Activity API</a></li>
+                    <li><a href='http://localhost:8000/swagger/index.html' target='_blank'>Swagger UI</a></li>
+                </ul>
+            </body>
+        </html>";
+
+        return Content(html, "text/html");
     }
 }
